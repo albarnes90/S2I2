@@ -14,8 +14,8 @@
 #include <vector>
 #include <cassert>
 
-##include "diag.h"
-##include "mmult.h"
+#include "diag.h"
+#include "mmult.h"
 
 #define INDEX(i,j) ((i>j) ? (((i)*((i)+1)/2)+(j)) : (((j)*((j)+1)/2)+(i)))
 
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 
   try {
     double **X, **F, **Fp, **C, **D, **D_last, *eps;
-    double **evecs, *evals, **TMP;
+    double **evecs, *evals, **TMP; 
 
     /*** =========================== ***/
     /*** initialize integrals, etc.  ***/
@@ -108,15 +108,16 @@ int main(int argc, char *argv[]) {
     evecs = init_matrix(nao, nao);
     evals = init_array(nao);
 //    diag(nao, nao, S, evals, 1, evecs, 1e-13);
-    info = C_DSYEV('v', 'u', nao, S[0], nao, evals, w, work, 3*nao); 
-    printf("Info from DSYEV = %d\n", info);
+     C_DSYEV('v', 'u', nao, S[0], nao, evals, work, 3*nao); 
+//    printf("Info from DSYEV = %d\n", info);
 
     for (int i = 0; i < nao; i++) {
       for (int j = 0; j < nao; j++) {
-        S[i][j] = 0.0;
+          evecs[j][i] = S[i][j];
+          S[i][j] = 0.0;
       }
       S[i][i] = 1.0 / sqrt(evals[i]);
-    }
+    } 
     TMP = init_matrix(nao, nao);
     X = init_matrix(nao, nao);
 //    mmult(evecs, 0, S, 0, TMP, nao, nao, nao);
@@ -150,11 +151,14 @@ int main(int argc, char *argv[]) {
 
     eps = init_array(nao);
 //    diag(nao, nao, Fp, eps, 1, TMP, 1e-13);
-    info = C_DSYEV('v','u', nao, Fp[0], nao, eps, w, work, 3*nao);
-    printf("Info from DSYEV = %d\n", info);
+    C_DSYEV('v','u', nao, Fp[0], nao, eps, work, 3*nao);
+//    printf("Info from DSYEV = %d\n", info);
     C = init_matrix(nao, nao);
 //    mmult(X, 0, TMP, 0, C, nao, nao, nao);
-    C_DGEMM('n','n', nao, nao, nao, 1.0, X[0], nao, TMP[0], nao, 0.0, C[0], nao);
+
+//Note: when calling on results from BLAS, actually need to use transpose bc of 
+//fortran and C++ difference
+    C_DGEMM('n','t', nao, nao, nao, 1.0, X[0], nao, Fp[0], nao, 0.0, C[0], nao);
     printf("\n\tInitial C Matrix:\n");
     print_mat(C, nao, nao, stdout);
 
@@ -230,12 +234,12 @@ int main(int argc, char *argv[]) {
       zero_matrix(TMP, nao, nao);
       zero_array(eps, nao);
 //      diag(nao, nao, Fp, eps, 1, TMP, 1e-13);
-      info = C_DSYEV('v','u', nao, Fp[0], nao, TMP[0], work, 3*nao);
-      printf("Info from DSYEV = %d\n", info);
+      C_DSYEV('v','u', nao, Fp[0], nao, eps, work, 3*nao);
+//      printf("Info from DSYEV = %d\n", info);
 
       zero_matrix(C, nao, nao);
 //      mmult(X, 0, TMP, 0, C, nao, nao, nao);
-      C_DGEMM('n', 'n', nao, nao, nao, 1.0, X[0], nao, TMP[0], nao, 0.0, C[0], nao);
+      C_DGEMM('n', 't', nao, nao, nao, 1.0, X[0], nao, Fp[0], nao, 0.0, C[0], nao);
 
       zero_matrix(D, nao, nao);
       for (int i = 0; i < nao; i++)
