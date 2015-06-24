@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     for(int j=0; j < dim; j++) {
       C[i][j] = 0.0;
       for(int k=0; k < dim; k++)
-        C[i][j] += A[i][k] * B[k][j];
+        C[i][j] += A[i][k] * B[j][k];
     }
 
 //  C_DGEMM('n','t', dim, dim, dim, 1.0, A[0], dim, B[0], dim, 0.0, C[0], dim);
