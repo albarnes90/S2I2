@@ -38,14 +38,14 @@ int main(int argc, char *argv[])
   double **A = matrix_init(dim, dim);
   symm_matrix_fill(A, dim);
 
-  printf("Matrix A:\n");
-  print_mat(A, dim, dim, stdout);
+//  printf("Matrix A:\n");
+//  print_mat(A, dim, dim, stdout);
 
   // Keep a copy
-  double **C = matrix_init(dim, dim);
-  for(int i=0; i < dim; i++)
-    for(int j=0; j < dim; j++)
-      C[i][j] = A[i][j];
+//  double **C = matrix_init(dim, dim);
+//  for(int i=0; i < dim; i++)
+//    for(int j=0; j < dim; j++)
+//      C[i][j] = A[i][j];
 
   double *w = new double[dim];
   double *work = new double[3*dim];
@@ -59,25 +59,25 @@ int main(int argc, char *argv[])
   printf("Time for eigenvalue = %5.2f sec.\n", (double) (end-begin)/1000000.0);
   printf("Info from DSYEV = %d\n", info);
 
-  printf("Eigenvalues of A:\n");
-  for(int i=0; i < dim; i++) printf("%20.12f\n", w[i]);
+//  printf("Eigenvalues of A:\n");
+//  for(int i=0; i < dim; i++) printf("%20.12f\n", w[i]);
 
-  printf("Eigenvectors of A:\n");
-  print_mat(A, dim, dim, stdout);
+//  printf("Eigenvectors of A:\n");
+//  print_mat(A, dim, dim, stdout);
 
-  double **B = matrix_init(dim, dim);
-  C_DGEMM('t', 'n', dim, dim, dim, 1.0, A[0], dim, A[0], dim, 0.0, B[0], dim);
-  printf("Testing orthonormality of eigenvectors:\n");
-  print_mat(B, dim, dim, stdout);
+//  double **B = matrix_init(dim, dim);
+//  C_DGEMM('t', 'n', dim, dim, dim, 1.0, A[0], dim, A[0], dim, 0.0, B[0], dim);
+//  printf("Testing orthonormality of eigenvectors:\n");
+//  print_mat(B, dim, dim, stdout);
 
-  C_DGEMM('n', 'n', dim, dim, dim, 1.0, A[0], dim, C[0], dim, 0.0, B[0], dim);
-  C_DGEMM('n', 't', dim, dim, dim, 1.0, B[0], dim, A[0], dim, 0.0, C[0], dim);
-  printf("Testing tranformation:\n");
-  print_mat(C, dim, dim, stdout);
+//  C_DGEMM('n', 'n', dim, dim, dim, 1.0, A[0], dim, C[0], dim, 0.0, B[0], dim);
+//  C_DGEMM('n', 't', dim, dim, dim, 1.0, B[0], dim, A[0], dim, 0.0, C[0], dim);
+//  printf("Testing tranformation:\n");
+//  print_mat(C, dim, dim, stdout);
 
   matrix_delete(A);
-  matrix_delete(B);
-  matrix_delete(C);
+//  matrix_delete(B);
+//  matrix_delete(C);
 
   delete [] w;
   delete [] work;
