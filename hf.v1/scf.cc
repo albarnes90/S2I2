@@ -14,8 +14,8 @@
 #include <vector>
 #include <cassert>
 
-#include "diag.h"
-#include "mmult.h"
+##include "diag.h"
+##include "mmult.h"
 
 #define INDEX(i,j) ((i>j) ? (((i)*((i)+1)/2)+(j)) : (((j)*((j)+1)/2)+(i)))
 
@@ -71,6 +71,10 @@ int main(int argc, char *argv[]) {
     printf("\nEnter the number of AOs: ");
     scanf("%d", &nao);
 
+    double *w = new double[nao];
+    double *work = new double[3*nao];
+    int info;
+
     /* overlap integrals */
     double **S = read_1e_ints("s.dat", nao);
     printf("\n\tOverlap Integrals:\n");
@@ -103,7 +107,10 @@ int main(int argc, char *argv[]) {
     /* build the symmetric orthogonalizer X = S^(-1/2) */
     evecs = init_matrix(nao, nao);
     evals = init_array(nao);
-    diag(nao, nao, S, evals, 1, evecs, 1e-13);
+//    diag(nao, nao, S, evals, 1, evecs, 1e-13);
+    info = C_DSYEV('v', 'u', nao, S[0], nao, evals, w, work, 3*nao); 
+    printf("Info from DSYEV = %d\n", info);
+
     for (int i = 0; i < nao; i++) {
       for (int j = 0; j < nao; j++) {
         S[i][j] = 0.0;
@@ -112,8 +119,10 @@ int main(int argc, char *argv[]) {
     }
     TMP = init_matrix(nao, nao);
     X = init_matrix(nao, nao);
-    mmult(evecs, 0, S, 0, TMP, nao, nao, nao);
-    mmult(TMP, 0, evecs, 1, X, nao, nao, nao);
+//    mmult(evecs, 0, S, 0, TMP, nao, nao, nao);
+    C_DGEMM('n','n',nao, nao, nao, 1.0, evecs[0], nao, S[0], nao, 0.0, TMP[0], nao); 
+//    mmult(TMP, 0, evecs, 1, X, nao, nao, nao);
+    C_DGEMM('n','t', nao, nao, nao, 1.0, TMP[0], nao, evecs[0], nao, 0.0, X[0], nao);
     delete_matrix(TMP);
     delete[] evals;
     delete_matrix(evecs);
@@ -132,15 +141,20 @@ int main(int argc, char *argv[]) {
 
     TMP = init_matrix(nao, nao);
     Fp = init_matrix(nao, nao);
-    mmult(X, 0, F, 0, TMP, nao, nao, nao);
-    mmult(TMP, 0, X, 0, Fp, nao, nao, nao);
+//    mmult(X, 0, F, 0, TMP, nao, nao, nao);
+    C_DGEMM('n', 'n', nao, nao, nao, 1.0, X[0], nao, F[0], nao, 0.0, TMP[0], nao);
+//    mmult(TMP, 0, X, 0, Fp, nao, nao, nao);
+    C_DGEMM('n', 'n', nao, nao, nao, 1.0, TMP[0], nao, X[0], nao, 0.0, Fp[0], nao);
     printf("\n\tInitial F' Matrix:\n");
     print_mat(Fp, nao, nao, stdout);
 
     eps = init_array(nao);
-    diag(nao, nao, Fp, eps, 1, TMP, 1e-13);
+//    diag(nao, nao, Fp, eps, 1, TMP, 1e-13);
+    info = C_DSYEV('v','u', nao, Fp[0], nao, eps, w, work, 3*nao);
+    printf("Info from DSYEV = %d\n", info);
     C = init_matrix(nao, nao);
-    mmult(X, 0, TMP, 0, C, nao, nao, nao);
+//    mmult(X, 0, TMP, 0, C, nao, nao, nao);
+    C_DGEMM('n','n', nao, nao, nao, 1.0, X[0], nao, TMP[0], nao, 0.0, C[0], nao);
     printf("\n\tInitial C Matrix:\n");
     print_mat(C, nao, nao, stdout);
 
@@ -207,16 +221,22 @@ int main(int argc, char *argv[]) {
       }
 
       zero_matrix(TMP, nao, nao);
-      mmult(X, 0, F, 0, TMP, nao, nao, nao);
+//      mmult(X, 0, F, 0, TMP, nao, nao, nao);
+      C_DGEMM('n','n', nao, nao, nao, 1.0, F[0], nao, X[0], nao, 0.0, TMP[0], nao);
       zero_matrix(Fp, nao, nao);
-      mmult(TMP, 0, X, 0, Fp, nao, nao, nao);
+//      mmult(TMP, 0, X, 0, Fp, nao, nao, nao);
+      C_DGEMM('n', 'n', nao, nao, nao, 1.0, TMP[0], nao, X[0], nao, 0.0, Fp[0], nao);
 
       zero_matrix(TMP, nao, nao);
       zero_array(eps, nao);
-      diag(nao, nao, Fp, eps, 1, TMP, 1e-13);
+//      diag(nao, nao, Fp, eps, 1, TMP, 1e-13);
+      info = C_DSYEV('v','u', nao, Fp[0], nao, TMP[0], work, 3*nao);
+      printf("Info from DSYEV = %d\n", info);
 
       zero_matrix(C, nao, nao);
-      mmult(X, 0, TMP, 0, C, nao, nao, nao);
+//      mmult(X, 0, TMP, 0, C, nao, nao, nao);
+      C_DGEMM('n', 'n', nao, nao, nao, 1.0, X[0], nao, TMP[0], nao, 0.0, C[0], nao);
+
       zero_matrix(D, nao, nao);
       for (int i = 0; i < nao; i++)
         for (int j = 0; j < nao; j++)
