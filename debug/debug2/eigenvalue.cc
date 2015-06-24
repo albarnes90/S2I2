@@ -103,7 +103,7 @@ void matrix_delete(double **A)
 void symm_matrix_fill(double **A, int dim)
 {
   for(int i=0; i < dim; i++)
-    for(int j=0; j <= i++; j++)
+    for(int j=0; j <= i; j++)
       A[i][j] = A[j][i] = my_rand();
 }
 
