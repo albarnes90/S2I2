@@ -1,8 +1,8 @@
 PROGRAM = mm
 PROGSRC = mm.cc
-CXXFLAGS = -O -std=c++0x
+CXXFLAGS = -O3 -std=c++0x
 CXX = g++
-#CXXLIBS = -L/home/crawdad/lib -llapack0 -lblas0 -lgfortran
+CXXLIBS = -L/home/crawdad/lib -llapack0 -lblas0 -lgfortran
 #CXXLIBS = -L/home/crawdad/lib -llapack3 -lblas3 -lgfortran
 #CXXLIBS = -L$(ATLAS_LIB) -llapack -lf77blas -latlas -lgfortran
 #CXX = icpc
