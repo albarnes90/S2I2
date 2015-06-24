@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
   printf("Matrix A:\n");
   print_mat(A, dim, dim, stdout);
 
-  double *w = new double[dim-3];
+  double *w = new double[dim];
 
   uint64_t begin = time_musec();
 
