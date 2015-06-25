@@ -1,0 +1,24 @@
+MIMD - multiple instructions multiple data
+    challenges:
+    -Load balancing: ensuring that all workers finish roughly at the same time
+    -data races: when multiple workers access the same dta and at least one access is a write, result is unpredictable
+    - non-deterministic execution: hard to reason about MIMD programs
+SIMD - single instructions multiple data
+    challenges:
+    -Data must be organized in a particular way (best when instructions process continuous properly-aligned data chunks)
+
+Mem heirarchy for a "classic" computer
+    -Registers, on die, fastest. Memory locations in which data has to sit in in order to be operated on by the processor. (1 clock cycle)
+    - level 1 cache: usually 64 kb, split - one for instruction, one for data. (3 clock cycles)
+    - level 2 cache: 256 kb - 12 mb, higher latency (10 clock cycles)
+    - level 3 cache: 4-18 mb: cheaper but slower, either on or off die
+    - main memory (DRAM): 256 mb - 4 gb, latency = 100 cycles
+    - disk: 1 TB +, easy to get lots of memory, but very slow, 10^7 cycles
+    - tape: 20+ TB, 10^10 cycles, very very slow!!
+
+Exercise: estimate how quickly you can compute with data in L1, L2, and RAM
+   nodes on blue ridge - 2.6x10^9 (Hz processor) = gamma
+    time to read = alpha(latency) = 100/2.6^9 =(approx) 3.8x10^-8 = 38 ns
+    rate of computation = 1/gamma = 1/2.6^9 = 3.8x10^-10 = .4 ns
+    rate of computation = 1/(t_read+t_execut)= 2.6x10^7 (?) not sure where he is getting these number now
+
