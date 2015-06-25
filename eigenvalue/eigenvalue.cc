@@ -42,10 +42,10 @@ int main(int argc, char *argv[])
 //  print_mat(A, dim, dim, stdout);
 
   // Keep a copy
-//  double **C = matrix_init(dim, dim);
-//  for(int i=0; i < dim; i++)
-//    for(int j=0; j < dim; j++)
-//      C[i][j] = A[i][j];
+  double **C = matrix_init(dim, dim);
+  for(int i=0; i < dim; i++)
+    for(int j=0; j < dim; j++)
+      C[i][j] = A[i][j];
 
   double *w = new double[dim];
   double *work = new double[3*dim];
@@ -65,13 +65,13 @@ int main(int argc, char *argv[])
 //  printf("Eigenvectors of A:\n");
 //  print_mat(A, dim, dim, stdout);
 
-//  double **B = matrix_init(dim, dim);
-//  C_DGEMM('t', 'n', dim, dim, dim, 1.0, A[0], dim, A[0], dim, 0.0, B[0], dim);
+  double **B = matrix_init(dim, dim);
+  C_DGEMM('t', 'n', dim, dim, dim, 1.0, A[0], dim, A[0], dim, 0.0, B[0], dim);
 //  printf("Testing orthonormality of eigenvectors:\n");
 //  print_mat(B, dim, dim, stdout);
 
-//  C_DGEMM('n', 'n', dim, dim, dim, 1.0, A[0], dim, C[0], dim, 0.0, B[0], dim);
-//  C_DGEMM('n', 't', dim, dim, dim, 1.0, B[0], dim, A[0], dim, 0.0, C[0], dim);
+  C_DGEMM('n', 'n', dim, dim, dim, 1.0, A[0], dim, C[0], dim, 0.0, B[0], dim);
+  C_DGEMM('n', 't', dim, dim, dim, 1.0, B[0], dim, A[0], dim, 0.0, C[0], dim);
 //  printf("Testing tranformation:\n");
 //  print_mat(C, dim, dim, stdout);
 
