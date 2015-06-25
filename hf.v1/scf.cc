@@ -71,7 +71,6 @@ int main(int argc, char *argv[]) {
     printf("\nEnter the number of AOs: ");
     scanf("%d", &nao);
 
-    double *w = new double[nao];
     double *work = new double[3*nao];
     int info;
 
@@ -108,8 +107,8 @@ int main(int argc, char *argv[]) {
     evecs = init_matrix(nao, nao);
     evals = init_array(nao);
 //    diag(nao, nao, S, evals, 1, evecs, 1e-13);
-     C_DSYEV('v', 'u', nao, S[0], nao, evals, work, 3*nao); 
-//    printf("Info from DSYEV = %d\n", info);
+    info = C_DSYEV('v', 'u', nao, S[0], nao, evals, work, 3*nao); 
+    printf("Info from DSYEV = %d\n", info);
 
     for (int i = 0; i < nao; i++) {
       for (int j = 0; j < nao; j++) {
@@ -151,8 +150,8 @@ int main(int argc, char *argv[]) {
 
     eps = init_array(nao);
 //    diag(nao, nao, Fp, eps, 1, TMP, 1e-13);
-    C_DSYEV('v','u', nao, Fp[0], nao, eps, work, 3*nao);
-//    printf("Info from DSYEV = %d\n", info);
+    info = C_DSYEV('v','u', nao, Fp[0], nao, eps, work, 3*nao);
+    printf("Info from DSYEV = %d\n", info);
     C = init_matrix(nao, nao);
 //    mmult(X, 0, TMP, 0, C, nao, nao, nao);
 
@@ -234,8 +233,8 @@ int main(int argc, char *argv[]) {
       zero_matrix(TMP, nao, nao);
       zero_array(eps, nao);
 //      diag(nao, nao, Fp, eps, 1, TMP, 1e-13);
-      C_DSYEV('v','u', nao, Fp[0], nao, eps, work, 3*nao);
-//      printf("Info from DSYEV = %d\n", info);
+      info = C_DSYEV('v','u', nao, Fp[0], nao, eps, work, 3*nao);
+      printf("Info from DSYEV = %d\n", info);
 
       zero_matrix(C, nao, nao);
 //      mmult(X, 0, TMP, 0, C, nao, nao, nao);
@@ -262,12 +261,15 @@ int main(int argc, char *argv[]) {
              ediff, sqrt(rmsd));
 
     } while (((fabs(ediff) > conv) || (fabs(rmsd) > conv)) && (iter < maxiter));
+//    printf(" %02d %20.12f %20.12f %20.12f %20.12f\n", iter, escf, escf + enuc,
+//             ediff, sqrt(rmsd));
 
     delete_matrix(TMP);
     delete_matrix(D_last);
     delete_matrix(D);
     delete_matrix(C);
     delete[] eps;
+    delete[] work;
     delete_matrix(Fp);
     delete_matrix(F);
     delete_matrix(X);

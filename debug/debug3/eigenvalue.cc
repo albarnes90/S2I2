@@ -67,14 +67,14 @@ int main(int argc, char *argv[])
   mmult(C, 1, A, 0, B, dim, dim, dim);
   zero_matrix(A, dim, dim);
   mmult(B, 0, C, 0, A, dim, dim ,dim);
-  matrix_delete(C);
+//  matrix_delete(C);
 
   printf("Testing transformation:\n");
   print_mat(A, dim, dim, stdout);
 
   matrix_delete(A);
   matrix_delete(B);
-//  matrix_delete(C);
+  matrix_delete(C);
 
   delete [] w;
 

@@ -1,0 +1,642 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+ no time accumulated
+
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+  0.00      0.00     0.00     2115     0.00     0.00  dlartg_
+  0.00      0.00     0.00     1225     0.00     0.00  disnan_
+  0.00      0.00     0.00     1225     0.00     0.00  dlaisnan_
+  0.00      0.00     0.00      642     0.00     0.00  dlapy2_
+  0.00      0.00     0.00      498     0.00     0.00  dlasr_
+  0.00      0.00     0.00      396     0.00     0.00  dscal_
+  0.00      0.00     0.00      216     0.00     0.00  dlarf_
+  0.00      0.00     0.00      216     0.00     0.00  dlarfg_
+  0.00      0.00     0.00      180     0.00     0.00  daxpy_
+  0.00      0.00     0.00      180     0.00     0.00  ddot_
+  0.00      0.00     0.00      180     0.00     0.00  dgemv_
+  0.00      0.00     0.00      180     0.00     0.00  dger_
+  0.00      0.00     0.00      180     0.00     0.00  dnrm2_
+  0.00      0.00     0.00      180     0.00     0.00  dsymv_
+  0.00      0.00     0.00      180     0.00     0.00  dsyr2_
+  0.00      0.00     0.00      180     0.00     0.00  iladlc_
+  0.00      0.00     0.00      170     0.00     0.00  zero_matrix(double**, int, int)
+  0.00      0.00     0.00      144     0.00     0.00  ilaenv_
+  0.00      0.00     0.00      110     0.00     0.00  dswap_
+  0.00      0.00     0.00      107     0.00     0.00  C_DGEMM(char, char, int, int, int, double, double*, int, double*, int, double, double*, int)
+  0.00      0.00     0.00      107     0.00     0.00  dgemm_
+  0.00      0.00     0.00       39     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::operator[](unsigned long)
+  0.00      0.00     0.00       36     0.00     0.00  C_DSYEV(char, char, int, double*, int, double*, double*, int)
+  0.00      0.00     0.00       36     0.00     0.00  dlaev2_
+  0.00      0.00     0.00       36     0.00     0.00  dlanst_
+  0.00      0.00     0.00       36     0.00     0.00  dlansy_
+  0.00      0.00     0.00       36     0.00     0.00  dorg2l_
+  0.00      0.00     0.00       36     0.00     0.00  dorgql_
+  0.00      0.00     0.00       36     0.00     0.00  dorgtr_
+  0.00      0.00     0.00       36     0.00     0.00  dsteqr_
+  0.00      0.00     0.00       36     0.00     0.00  dsyev_
+  0.00      0.00     0.00       36     0.00     0.00  dsytd2_
+  0.00      0.00     0.00       36     0.00     0.00  dsytrd_
+  0.00      0.00     0.00       34     0.00     0.00  zero_array(double*, int)
+  0.00      0.00     0.00       20     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::size() const
+  0.00      0.00     0.00       13     0.00     0.00  init_matrix(int, int)
+  0.00      0.00     0.00       13     0.00     0.00  delete_matrix(double**)
+  0.00      0.00     0.00       11     0.00     0.00  std::_Iter_base<Atom*, false>::_S_base(Atom*)
+  0.00      0.00     0.00        9     0.00     0.00  print_mat(double**, int, int, _IO_FILE*)
+  0.00      0.00     0.00        7     0.00     0.00  std::_Niter_base<Atom*>::iterator_type std::__niter_base<Atom*>(Atom*)
+  0.00      0.00     0.00        5     0.00     0.00  std::_Vector_base<Atom, std::allocator<Atom> >::_M_get_Tp_allocator()
+  0.00      0.00     0.00        4     0.00     0.00  __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::base() const
+  0.00      0.00     0.00        4     0.00     0.00  std::_Miter_base<Atom*>::iterator_type std::__miter_base<Atom*>(Atom*)
+  0.00      0.00     0.00        3     0.00     0.00  init_array(int)
+  0.00      0.00     0.00        3     0.00     0.00  read_1e_ints(char const*, int)
+  0.00      0.00     0.00        3     0.00     0.00  __gnu_cxx::new_allocator<Atom>::max_size() const
+  0.00      0.00     0.00        2     0.00     0.00  __gnu_cxx::__alloc_traits<std::allocator<Atom> >::max_size(std::allocator<Atom> const&)
+  0.00      0.00     0.00        2     0.00     0.00  __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::__normal_iterator(Atom* const&)
+  0.00      0.00     0.00        2     0.00     0.00  std::_Vector_base<Atom, std::allocator<Atom> >::_M_get_Tp_allocator() const
+  0.00      0.00     0.00        2     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::max_size() const
+  0.00      0.00     0.00        2     0.00     0.00  Atom* std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<Atom>(Atom const*, Atom const*, Atom*)
+  0.00      0.00     0.00        2     0.00     0.00  void std::_Destroy_aux<true>::__destroy<Atom*>(Atom*, Atom*)
+  0.00      0.00     0.00        2     0.00     0.00  std::_Vector_base<Atom, std::allocator<Atom> >::_M_deallocate(Atom*, unsigned long)
+  0.00      0.00     0.00        2     0.00     0.00  Atom* std::__uninitialized_copy<true>::__uninit_copy<Atom*, Atom*>(Atom*, Atom*, Atom*)
+  0.00      0.00     0.00        2     0.00     0.00  Atom* std::__copy_move_a<false, Atom*, Atom*>(Atom*, Atom*, Atom*)
+  0.00      0.00     0.00        2     0.00     0.00  Atom* std::__copy_move_a2<false, Atom*, Atom*>(Atom*, Atom*, Atom*)
+  0.00      0.00     0.00        2     0.00     0.00  Atom* std::uninitialized_copy<Atom*, Atom*>(Atom*, Atom*, Atom*)
+  0.00      0.00     0.00        2     0.00     0.00  Atom* std::__uninitialized_copy_a<Atom*, Atom*, Atom>(Atom*, Atom*, Atom*, std::allocator<Atom>&)
+  0.00      0.00     0.00        2     0.00     0.00  Atom* std::__uninitialized_move_if_noexcept_a<Atom*, Atom*, std::allocator<Atom> >(Atom*, Atom*, Atom*, std::allocator<Atom>&)
+  0.00      0.00     0.00        2     0.00     0.00  Atom* std::copy<Atom*, Atom*>(Atom*, Atom*, Atom*)
+  0.00      0.00     0.00        2     0.00     0.00  void std::_Destroy<Atom*>(Atom*, Atom*)
+  0.00      0.00     0.00        2     0.00     0.00  void std::_Destroy<Atom*, Atom>(Atom*, Atom*, std::allocator<Atom>&)
+  0.00      0.00     0.00        1     0.00     0.00  _GLOBAL__sub_I_main
+  0.00      0.00     0.00        1     0.00     0.00  read_2e_ints(char const*, int)
+  0.00      0.00     0.00        1     0.00     0.00  read_geometry(char const*, std::vector<Atom, std::allocator<Atom> >&)
+  0.00      0.00     0.00        1     0.00     0.00  __static_initialization_and_destruction_0(int, int)
+  0.00      0.00     0.00        1     0.00     0.00  __gnu_cxx::new_allocator<Atom>::deallocate(Atom*, unsigned long)
+  0.00      0.00     0.00        1     0.00     0.00  __gnu_cxx::new_allocator<Atom>::allocate(unsigned long, void const*)
+  0.00      0.00     0.00        1     0.00     0.00  __gnu_cxx::new_allocator<Atom>::new_allocator()
+  0.00      0.00     0.00        1     0.00     0.00  __gnu_cxx::new_allocator<Atom>::~new_allocator()
+  0.00      0.00     0.00        1     0.00     0.00  __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::difference_type __gnu_cxx::operator-<Atom*, std::vector<Atom, std::allocator<Atom> > >(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > > const&, __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > > const&)
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::_M_check_len(unsigned long, char const*) const
+  0.00      0.00     0.00        1     0.00     0.00  std::allocator<Atom>::allocator()
+  0.00      0.00     0.00        1     0.00     0.00  std::allocator<Atom>::~allocator()
+  0.00      0.00     0.00        1     0.00     0.00  std::_Vector_base<Atom, std::allocator<Atom> >::_M_allocate(unsigned long)
+  0.00      0.00     0.00        1     0.00     0.00  std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_impl::_Vector_impl()
+  0.00      0.00     0.00        1     0.00     0.00  std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_impl::~_Vector_impl()
+  0.00      0.00     0.00        1     0.00     0.00  std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_base()
+  0.00      0.00     0.00        1     0.00     0.00  std::_Vector_base<Atom, std::allocator<Atom> >::~_Vector_base()
+  0.00      0.00     0.00        1     0.00     0.00  void std::__uninitialized_fill_n<true>::__uninit_fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&)
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&)
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::end()
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::begin()
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&)
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::resize(unsigned long, Atom)
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::vector()
+  0.00      0.00     0.00        1     0.00     0.00  std::vector<Atom, std::allocator<Atom> >::~vector()
+  0.00      0.00     0.00        1     0.00     0.00  __gnu_cxx::__enable_if<!(std::__is_scalar<Atom>::__value), Atom*>::__type std::__fill_n_a<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&)
+  0.00      0.00     0.00        1     0.00     0.00  void std::uninitialized_fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&)
+  0.00      0.00     0.00        1     0.00     0.00  void std::__uninitialized_fill_n_a<Atom*, unsigned long, Atom, Atom>(Atom*, unsigned long, Atom const&, std::allocator<Atom>&)
+  0.00      0.00     0.00        1     0.00     0.00  unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&)
+  0.00      0.00     0.00        1     0.00     0.00  Atom* std::fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) no time propagated
+
+index % time    self  children    called     name
+                0.00    0.00    2115/2115        dsteqr_ [26]
+[1]      0.0    0.00    0.00    2115         dlartg_ [1]
+-----------------------------------------------
+                0.00    0.00     253/1225        dlanst_ [21]
+                0.00    0.00     972/1225        dlansy_ [22]
+[2]      0.0    0.00    0.00    1225         disnan_ [2]
+-----------------------------------------------
+                0.00    0.00     253/1225        dlanst_ [21]
+                0.00    0.00     972/1225        dlansy_ [22]
+[3]      0.0    0.00    0.00    1225         dlaisnan_ [3]
+-----------------------------------------------
+                0.00    0.00     180/642         dlarfg_ [8]
+                0.00    0.00     462/642         dsteqr_ [26]
+[4]      0.0    0.00    0.00     642         dlapy2_ [4]
+-----------------------------------------------
+                0.00    0.00     498/498         dsteqr_ [26]
+[5]      0.0    0.00    0.00     498         dlasr_ [5]
+-----------------------------------------------
+                0.00    0.00     180/396         dlarfg_ [8]
+                0.00    0.00     216/396         dorg2l_ [23]
+[6]      0.0    0.00    0.00     396         dscal_ [6]
+-----------------------------------------------
+                0.00    0.00     216/216         dorg2l_ [23]
+[7]      0.0    0.00    0.00     216         dlarf_ [7]
+                0.00    0.00     180/180         iladlc_ [16]
+                0.00    0.00     180/180         dgemv_ [11]
+                0.00    0.00     180/180         dger_ [12]
+-----------------------------------------------
+                0.00    0.00     216/216         dsytd2_ [28]
+[8]      0.0    0.00    0.00     216         dlarfg_ [8]
+                0.00    0.00     180/180         dnrm2_ [13]
+                0.00    0.00     180/642         dlapy2_ [4]
+                0.00    0.00     180/396         dscal_ [6]
+-----------------------------------------------
+                0.00    0.00     180/180         dsytd2_ [28]
+[9]      0.0    0.00    0.00     180         daxpy_ [9]
+-----------------------------------------------
+                0.00    0.00     180/180         dsytd2_ [28]
+[10]     0.0    0.00    0.00     180         ddot_ [10]
+-----------------------------------------------
+                0.00    0.00     180/180         dlarf_ [7]
+[11]     0.0    0.00    0.00     180         dgemv_ [11]
+-----------------------------------------------
+                0.00    0.00     180/180         dlarf_ [7]
+[12]     0.0    0.00    0.00     180         dger_ [12]
+-----------------------------------------------
+                0.00    0.00     180/180         dlarfg_ [8]
+[13]     0.0    0.00    0.00     180         dnrm2_ [13]
+-----------------------------------------------
+                0.00    0.00     180/180         dsytd2_ [28]
+[14]     0.0    0.00    0.00     180         dsymv_ [14]
+-----------------------------------------------
+                0.00    0.00     180/180         dsytd2_ [28]
+[15]     0.0    0.00    0.00     180         dsyr2_ [15]
+-----------------------------------------------
+                0.00    0.00     180/180         dlarf_ [7]
+[16]     0.0    0.00    0.00     180         iladlc_ [16]
+-----------------------------------------------
+                0.00    0.00      36/144         dsyev_ [27]
+                0.00    0.00      36/144         dsytrd_ [29]
+                0.00    0.00      36/144         dorgtr_ [25]
+                0.00    0.00      36/144         dorgql_ [24]
+[17]     0.0    0.00    0.00     144         ilaenv_ [17]
+-----------------------------------------------
+                0.00    0.00     110/110         dsteqr_ [26]
+[18]     0.0    0.00    0.00     110         dswap_ [18]
+-----------------------------------------------
+                0.00    0.00     107/107         C_DGEMM(char, char, int, int, int, double, double*, int, double*, int, double, double*, int) [60]
+[19]     0.0    0.00    0.00     107         dgemm_ [19]
+-----------------------------------------------
+                0.00    0.00      36/36          dsteqr_ [26]
+[20]     0.0    0.00    0.00      36         dlaev2_ [20]
+-----------------------------------------------
+                0.00    0.00      36/36          dsteqr_ [26]
+[21]     0.0    0.00    0.00      36         dlanst_ [21]
+                0.00    0.00     253/1225        dlaisnan_ [3]
+                0.00    0.00     253/1225        disnan_ [2]
+-----------------------------------------------
+                0.00    0.00      36/36          dsyev_ [27]
+[22]     0.0    0.00    0.00      36         dlansy_ [22]
+                0.00    0.00     972/1225        dlaisnan_ [3]
+                0.00    0.00     972/1225        disnan_ [2]
+-----------------------------------------------
+                0.00    0.00      36/36          dorgql_ [24]
+[23]     0.0    0.00    0.00      36         dorg2l_ [23]
+                0.00    0.00     216/216         dlarf_ [7]
+                0.00    0.00     216/396         dscal_ [6]
+-----------------------------------------------
+                0.00    0.00      36/36          dorgtr_ [25]
+[24]     0.0    0.00    0.00      36         dorgql_ [24]
+                0.00    0.00      36/144         ilaenv_ [17]
+                0.00    0.00      36/36          dorg2l_ [23]
+-----------------------------------------------
+                0.00    0.00      36/36          dsyev_ [27]
+[25]     0.0    0.00    0.00      36         dorgtr_ [25]
+                0.00    0.00      36/144         ilaenv_ [17]
+                0.00    0.00      36/36          dorgql_ [24]
+-----------------------------------------------
+                0.00    0.00      36/36          dsyev_ [27]
+[26]     0.0    0.00    0.00      36         dsteqr_ [26]
+                0.00    0.00    2115/2115        dlartg_ [1]
+                0.00    0.00     498/498         dlasr_ [5]
+                0.00    0.00     462/642         dlapy2_ [4]
+                0.00    0.00     110/110         dswap_ [18]
+                0.00    0.00      36/36          dlanst_ [21]
+                0.00    0.00      36/36          dlaev2_ [20]
+-----------------------------------------------
+                0.00    0.00      36/36          C_DSYEV(char, char, int, double*, int, double*, double*, int) [62]
+[27]     0.0    0.00    0.00      36         dsyev_ [27]
+                0.00    0.00      36/144         ilaenv_ [17]
+                0.00    0.00      36/36          dlansy_ [22]
+                0.00    0.00      36/36          dsytrd_ [29]
+                0.00    0.00      36/36          dorgtr_ [25]
+                0.00    0.00      36/36          dsteqr_ [26]
+-----------------------------------------------
+                0.00    0.00      36/36          dsytrd_ [29]
+[28]     0.0    0.00    0.00      36         dsytd2_ [28]
+                0.00    0.00     216/216         dlarfg_ [8]
+                0.00    0.00     180/180         dsymv_ [14]
+                0.00    0.00     180/180         ddot_ [10]
+                0.00    0.00     180/180         daxpy_ [9]
+                0.00    0.00     180/180         dsyr2_ [15]
+-----------------------------------------------
+                0.00    0.00      36/36          dsyev_ [27]
+[29]     0.0    0.00    0.00      36         dsytrd_ [29]
+                0.00    0.00      36/144         ilaenv_ [17]
+                0.00    0.00      36/36          dsytd2_ [28]
+-----------------------------------------------
+                0.00    0.00     170/170         main [56]
+[59]     0.0    0.00    0.00     170         zero_matrix(double**, int, int) [59]
+-----------------------------------------------
+                0.00    0.00     107/107         main [56]
+[60]     0.0    0.00    0.00     107         C_DGEMM(char, char, int, int, int, double, double*, int, double*, int, double, double*, int) [60]
+                0.00    0.00     107/107         dgemm_ [19]
+-----------------------------------------------
+                0.00    0.00      12/39          read_geometry(char const*, std::vector<Atom, std::allocator<Atom> >&) [94]
+                0.00    0.00      27/39          main [56]
+[61]     0.0    0.00    0.00      39         std::vector<Atom, std::allocator<Atom> >::operator[](unsigned long) [61]
+-----------------------------------------------
+                0.00    0.00      36/36          main [56]
+[62]     0.0    0.00    0.00      36         C_DSYEV(char, char, int, double*, int, double*, double*, int) [62]
+                0.00    0.00      36/36          dsyev_ [27]
+-----------------------------------------------
+                0.00    0.00      34/34          main [56]
+[63]     0.0    0.00    0.00      34         zero_array(double*, int) [63]
+-----------------------------------------------
+                0.00    0.00       2/20          std::vector<Atom, std::allocator<Atom> >::resize(unsigned long, Atom) [114]
+                0.00    0.00       4/20          std::vector<Atom, std::allocator<Atom> >::_M_check_len(unsigned long, char const*) const [101]
+                0.00    0.00      14/20          main [56]
+[64]     0.0    0.00    0.00      20         std::vector<Atom, std::allocator<Atom> >::size() const [64]
+-----------------------------------------------
+                0.00    0.00       3/13          read_1e_ints(char const*, int) [74]
+                0.00    0.00      10/13          main [56]
+[65]     0.0    0.00    0.00      13         init_matrix(int, int) [65]
+-----------------------------------------------
+                0.00    0.00      13/13          main [56]
+[66]     0.0    0.00    0.00      13         delete_matrix(double**) [66]
+-----------------------------------------------
+                0.00    0.00       4/11          std::_Miter_base<Atom*>::iterator_type std::__miter_base<Atom*>(Atom*) [72]
+                0.00    0.00       7/11          std::_Niter_base<Atom*>::iterator_type std::__niter_base<Atom*>(Atom*) [69]
+[67]     0.0    0.00    0.00      11         std::_Iter_base<Atom*, false>::_S_base(Atom*) [67]
+-----------------------------------------------
+                0.00    0.00       9/9           main [56]
+[68]     0.0    0.00    0.00       9         print_mat(double**, int, int, _IO_FILE*) [68]
+-----------------------------------------------
+                0.00    0.00       1/7           Atom* std::fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [121]
+                0.00    0.00       6/7           Atom* std::__copy_move_a2<false, Atom*, Atom*>(Atom*, Atom*, Atom*) [85]
+[69]     0.0    0.00    0.00       7         std::_Niter_base<Atom*>::iterator_type std::__niter_base<Atom*>(Atom*) [69]
+                0.00    0.00       7/11          std::_Iter_base<Atom*, false>::_S_base(Atom*) [67]
+-----------------------------------------------
+                0.00    0.00       1/5           std::vector<Atom, std::allocator<Atom> >::~vector() [116]
+                0.00    0.00       4/5           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+[70]     0.0    0.00    0.00       5         std::_Vector_base<Atom, std::allocator<Atom> >::_M_get_Tp_allocator() [70]
+-----------------------------------------------
+                0.00    0.00       2/4           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+                0.00    0.00       2/4           __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::difference_type __gnu_cxx::operator-<Atom*, std::vector<Atom, std::allocator<Atom> > >(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > > const&, __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > > const&) [100]
+[71]     0.0    0.00    0.00       4         __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::base() const [71]
+-----------------------------------------------
+                0.00    0.00       4/4           Atom* std::copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [89]
+[72]     0.0    0.00    0.00       4         std::_Miter_base<Atom*>::iterator_type std::__miter_base<Atom*>(Atom*) [72]
+                0.00    0.00       4/11          std::_Iter_base<Atom*, false>::_S_base(Atom*) [67]
+-----------------------------------------------
+                0.00    0.00       1/3           read_2e_ints(char const*, int) [93]
+                0.00    0.00       2/3           main [56]
+[73]     0.0    0.00    0.00       3         init_array(int) [73]
+-----------------------------------------------
+                0.00    0.00       3/3           main [56]
+[74]     0.0    0.00    0.00       3         read_1e_ints(char const*, int) [74]
+                0.00    0.00       3/13          init_matrix(int, int) [65]
+-----------------------------------------------
+                0.00    0.00       1/3           __gnu_cxx::new_allocator<Atom>::allocate(unsigned long, void const*) [97]
+                0.00    0.00       2/3           __gnu_cxx::__alloc_traits<std::allocator<Atom> >::max_size(std::allocator<Atom> const&) [76]
+[75]     0.0    0.00    0.00       3         __gnu_cxx::new_allocator<Atom>::max_size() const [75]
+-----------------------------------------------
+                0.00    0.00       2/2           std::vector<Atom, std::allocator<Atom> >::max_size() const [79]
+[76]     0.0    0.00    0.00       2         __gnu_cxx::__alloc_traits<std::allocator<Atom> >::max_size(std::allocator<Atom> const&) [76]
+                0.00    0.00       2/3           __gnu_cxx::new_allocator<Atom>::max_size() const [75]
+-----------------------------------------------
+                0.00    0.00       1/2           std::vector<Atom, std::allocator<Atom> >::end() [111]
+                0.00    0.00       1/2           std::vector<Atom, std::allocator<Atom> >::begin() [112]
+[77]     0.0    0.00    0.00       2         __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::__normal_iterator(Atom* const&) [77]
+-----------------------------------------------
+                0.00    0.00       2/2           std::vector<Atom, std::allocator<Atom> >::max_size() const [79]
+[78]     0.0    0.00    0.00       2         std::_Vector_base<Atom, std::allocator<Atom> >::_M_get_Tp_allocator() const [78]
+-----------------------------------------------
+                0.00    0.00       2/2           std::vector<Atom, std::allocator<Atom> >::_M_check_len(unsigned long, char const*) const [101]
+[79]     0.0    0.00    0.00       2         std::vector<Atom, std::allocator<Atom> >::max_size() const [79]
+                0.00    0.00       2/2           std::_Vector_base<Atom, std::allocator<Atom> >::_M_get_Tp_allocator() const [78]
+                0.00    0.00       2/2           __gnu_cxx::__alloc_traits<std::allocator<Atom> >::max_size(std::allocator<Atom> const&) [76]
+-----------------------------------------------
+                0.00    0.00       2/2           Atom* std::__copy_move_a<false, Atom*, Atom*>(Atom*, Atom*, Atom*) [84]
+[80]     0.0    0.00    0.00       2         Atom* std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<Atom>(Atom const*, Atom const*, Atom*) [80]
+-----------------------------------------------
+                0.00    0.00       2/2           void std::_Destroy<Atom*>(Atom*, Atom*) [90]
+[81]     0.0    0.00    0.00       2         void std::_Destroy_aux<true>::__destroy<Atom*>(Atom*, Atom*) [81]
+-----------------------------------------------
+                0.00    0.00       1/2           std::_Vector_base<Atom, std::allocator<Atom> >::~_Vector_base() [108]
+                0.00    0.00       1/2           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+[82]     0.0    0.00    0.00       2         std::_Vector_base<Atom, std::allocator<Atom> >::_M_deallocate(Atom*, unsigned long) [82]
+                0.00    0.00       1/1           __gnu_cxx::new_allocator<Atom>::deallocate(Atom*, unsigned long) [96]
+-----------------------------------------------
+                0.00    0.00       2/2           Atom* std::uninitialized_copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [86]
+[83]     0.0    0.00    0.00       2         Atom* std::__uninitialized_copy<true>::__uninit_copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [83]
+                0.00    0.00       2/2           Atom* std::copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [89]
+-----------------------------------------------
+                0.00    0.00       2/2           Atom* std::__copy_move_a2<false, Atom*, Atom*>(Atom*, Atom*, Atom*) [85]
+[84]     0.0    0.00    0.00       2         Atom* std::__copy_move_a<false, Atom*, Atom*>(Atom*, Atom*, Atom*) [84]
+                0.00    0.00       2/2           Atom* std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<Atom>(Atom const*, Atom const*, Atom*) [80]
+-----------------------------------------------
+                0.00    0.00       2/2           Atom* std::copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [89]
+[85]     0.0    0.00    0.00       2         Atom* std::__copy_move_a2<false, Atom*, Atom*>(Atom*, Atom*, Atom*) [85]
+                0.00    0.00       6/7           std::_Niter_base<Atom*>::iterator_type std::__niter_base<Atom*>(Atom*) [69]
+                0.00    0.00       2/2           Atom* std::__copy_move_a<false, Atom*, Atom*>(Atom*, Atom*, Atom*) [84]
+-----------------------------------------------
+                0.00    0.00       2/2           Atom* std::__uninitialized_copy_a<Atom*, Atom*, Atom>(Atom*, Atom*, Atom*, std::allocator<Atom>&) [87]
+[86]     0.0    0.00    0.00       2         Atom* std::uninitialized_copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [86]
+                0.00    0.00       2/2           Atom* std::__uninitialized_copy<true>::__uninit_copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [83]
+-----------------------------------------------
+                0.00    0.00       2/2           Atom* std::__uninitialized_move_if_noexcept_a<Atom*, Atom*, std::allocator<Atom> >(Atom*, Atom*, Atom*, std::allocator<Atom>&) [88]
+[87]     0.0    0.00    0.00       2         Atom* std::__uninitialized_copy_a<Atom*, Atom*, Atom>(Atom*, Atom*, Atom*, std::allocator<Atom>&) [87]
+                0.00    0.00       2/2           Atom* std::uninitialized_copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [86]
+-----------------------------------------------
+                0.00    0.00       2/2           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+[88]     0.0    0.00    0.00       2         Atom* std::__uninitialized_move_if_noexcept_a<Atom*, Atom*, std::allocator<Atom> >(Atom*, Atom*, Atom*, std::allocator<Atom>&) [88]
+                0.00    0.00       2/2           Atom* std::__uninitialized_copy_a<Atom*, Atom*, Atom>(Atom*, Atom*, Atom*, std::allocator<Atom>&) [87]
+-----------------------------------------------
+                0.00    0.00       2/2           Atom* std::__uninitialized_copy<true>::__uninit_copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [83]
+[89]     0.0    0.00    0.00       2         Atom* std::copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [89]
+                0.00    0.00       4/4           std::_Miter_base<Atom*>::iterator_type std::__miter_base<Atom*>(Atom*) [72]
+                0.00    0.00       2/2           Atom* std::__copy_move_a2<false, Atom*, Atom*>(Atom*, Atom*, Atom*) [85]
+-----------------------------------------------
+                0.00    0.00       2/2           void std::_Destroy<Atom*, Atom>(Atom*, Atom*, std::allocator<Atom>&) [91]
+[90]     0.0    0.00    0.00       2         void std::_Destroy<Atom*>(Atom*, Atom*) [90]
+                0.00    0.00       2/2           void std::_Destroy_aux<true>::__destroy<Atom*>(Atom*, Atom*) [81]
+-----------------------------------------------
+                0.00    0.00       1/2           std::vector<Atom, std::allocator<Atom> >::~vector() [116]
+                0.00    0.00       1/2           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+[91]     0.0    0.00    0.00       2         void std::_Destroy<Atom*, Atom>(Atom*, Atom*, std::allocator<Atom>&) [91]
+                0.00    0.00       2/2           void std::_Destroy<Atom*>(Atom*, Atom*) [90]
+-----------------------------------------------
+                0.00    0.00       1/1           __do_global_ctors_aux [136]
+[92]     0.0    0.00    0.00       1         _GLOBAL__sub_I_main [92]
+                0.00    0.00       1/1           __static_initialization_and_destruction_0(int, int) [95]
+-----------------------------------------------
+                0.00    0.00       1/1           main [56]
+[93]     0.0    0.00    0.00       1         read_2e_ints(char const*, int) [93]
+                0.00    0.00       1/3           init_array(int) [73]
+-----------------------------------------------
+                0.00    0.00       1/1           main [56]
+[94]     0.0    0.00    0.00       1         read_geometry(char const*, std::vector<Atom, std::allocator<Atom> >&) [94]
+                0.00    0.00      12/39          std::vector<Atom, std::allocator<Atom> >::operator[](unsigned long) [61]
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::resize(unsigned long, Atom) [114]
+-----------------------------------------------
+                0.00    0.00       1/1           _GLOBAL__sub_I_main [92]
+[95]     0.0    0.00    0.00       1         __static_initialization_and_destruction_0(int, int) [95]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::_M_deallocate(Atom*, unsigned long) [82]
+[96]     0.0    0.00    0.00       1         __gnu_cxx::new_allocator<Atom>::deallocate(Atom*, unsigned long) [96]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::_M_allocate(unsigned long) [104]
+[97]     0.0    0.00    0.00       1         __gnu_cxx::new_allocator<Atom>::allocate(unsigned long, void const*) [97]
+                0.00    0.00       1/3           __gnu_cxx::new_allocator<Atom>::max_size() const [75]
+-----------------------------------------------
+                0.00    0.00       1/1           std::allocator<Atom>::allocator() [102]
+[98]     0.0    0.00    0.00       1         __gnu_cxx::new_allocator<Atom>::new_allocator() [98]
+-----------------------------------------------
+                0.00    0.00       1/1           std::allocator<Atom>::~allocator() [103]
+[99]     0.0    0.00    0.00       1         __gnu_cxx::new_allocator<Atom>::~new_allocator() [99]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+[100]    0.0    0.00    0.00       1         __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::difference_type __gnu_cxx::operator-<Atom*, std::vector<Atom, std::allocator<Atom> > >(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > > const&, __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > > const&) [100]
+                0.00    0.00       2/4           __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::base() const [71]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+[101]    0.0    0.00    0.00       1         std::vector<Atom, std::allocator<Atom> >::_M_check_len(unsigned long, char const*) const [101]
+                0.00    0.00       4/20          std::vector<Atom, std::allocator<Atom> >::size() const [64]
+                0.00    0.00       2/2           std::vector<Atom, std::allocator<Atom> >::max_size() const [79]
+                0.00    0.00       1/1           unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&) [120]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_impl::_Vector_impl() [105]
+[102]    0.0    0.00    0.00       1         std::allocator<Atom>::allocator() [102]
+                0.00    0.00       1/1           __gnu_cxx::new_allocator<Atom>::new_allocator() [98]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_impl::~_Vector_impl() [106]
+[103]    0.0    0.00    0.00       1         std::allocator<Atom>::~allocator() [103]
+                0.00    0.00       1/1           __gnu_cxx::new_allocator<Atom>::~new_allocator() [99]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+[104]    0.0    0.00    0.00       1         std::_Vector_base<Atom, std::allocator<Atom> >::_M_allocate(unsigned long) [104]
+                0.00    0.00       1/1           __gnu_cxx::new_allocator<Atom>::allocate(unsigned long, void const*) [97]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_base() [107]
+[105]    0.0    0.00    0.00       1         std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_impl::_Vector_impl() [105]
+                0.00    0.00       1/1           std::allocator<Atom>::allocator() [102]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::~_Vector_base() [108]
+[106]    0.0    0.00    0.00       1         std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_impl::~_Vector_impl() [106]
+                0.00    0.00       1/1           std::allocator<Atom>::~allocator() [103]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::vector() [115]
+[107]    0.0    0.00    0.00       1         std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_base() [107]
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_impl::_Vector_impl() [105]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::~vector() [116]
+[108]    0.0    0.00    0.00       1         std::_Vector_base<Atom, std::allocator<Atom> >::~_Vector_base() [108]
+                0.00    0.00       1/2           std::_Vector_base<Atom, std::allocator<Atom> >::_M_deallocate(Atom*, unsigned long) [82]
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_impl::~_Vector_impl() [106]
+-----------------------------------------------
+                0.00    0.00       1/1           void std::uninitialized_fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [118]
+[109]    0.0    0.00    0.00       1         void std::__uninitialized_fill_n<true>::__uninit_fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [109]
+                0.00    0.00       1/1           Atom* std::fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [121]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [113]
+[110]    0.0    0.00    0.00       1         std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+                0.00    0.00       4/5           std::_Vector_base<Atom, std::allocator<Atom> >::_M_get_Tp_allocator() [70]
+                0.00    0.00       2/4           __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::base() const [71]
+                0.00    0.00       2/2           Atom* std::__uninitialized_move_if_noexcept_a<Atom*, Atom*, std::allocator<Atom> >(Atom*, Atom*, Atom*, std::allocator<Atom>&) [88]
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::_M_check_len(unsigned long, char const*) const [101]
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::begin() [112]
+                0.00    0.00       1/1           __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::difference_type __gnu_cxx::operator-<Atom*, std::vector<Atom, std::allocator<Atom> > >(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > > const&, __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > > const&) [100]
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::_M_allocate(unsigned long) [104]
+                0.00    0.00       1/1           void std::__uninitialized_fill_n_a<Atom*, unsigned long, Atom, Atom>(Atom*, unsigned long, Atom const&, std::allocator<Atom>&) [119]
+                0.00    0.00       1/2           void std::_Destroy<Atom*, Atom>(Atom*, Atom*, std::allocator<Atom>&) [91]
+                0.00    0.00       1/2           std::_Vector_base<Atom, std::allocator<Atom> >::_M_deallocate(Atom*, unsigned long) [82]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::resize(unsigned long, Atom) [114]
+[111]    0.0    0.00    0.00       1         std::vector<Atom, std::allocator<Atom> >::end() [111]
+                0.00    0.00       1/2           __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::__normal_iterator(Atom* const&) [77]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+[112]    0.0    0.00    0.00       1         std::vector<Atom, std::allocator<Atom> >::begin() [112]
+                0.00    0.00       1/2           __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::__normal_iterator(Atom* const&) [77]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::resize(unsigned long, Atom) [114]
+[113]    0.0    0.00    0.00       1         std::vector<Atom, std::allocator<Atom> >::insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [113]
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+-----------------------------------------------
+                0.00    0.00       1/1           read_geometry(char const*, std::vector<Atom, std::allocator<Atom> >&) [94]
+[114]    0.0    0.00    0.00       1         std::vector<Atom, std::allocator<Atom> >::resize(unsigned long, Atom) [114]
+                0.00    0.00       2/20          std::vector<Atom, std::allocator<Atom> >::size() const [64]
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::end() [111]
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [113]
+-----------------------------------------------
+                0.00    0.00       1/1           main [56]
+[115]    0.0    0.00    0.00       1         std::vector<Atom, std::allocator<Atom> >::vector() [115]
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_base() [107]
+-----------------------------------------------
+                0.00    0.00       1/1           main [56]
+[116]    0.0    0.00    0.00       1         std::vector<Atom, std::allocator<Atom> >::~vector() [116]
+                0.00    0.00       1/5           std::_Vector_base<Atom, std::allocator<Atom> >::_M_get_Tp_allocator() [70]
+                0.00    0.00       1/2           void std::_Destroy<Atom*, Atom>(Atom*, Atom*, std::allocator<Atom>&) [91]
+                0.00    0.00       1/1           std::_Vector_base<Atom, std::allocator<Atom> >::~_Vector_base() [108]
+-----------------------------------------------
+                0.00    0.00       1/1           Atom* std::fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [121]
+[117]    0.0    0.00    0.00       1         __gnu_cxx::__enable_if<!(std::__is_scalar<Atom>::__value), Atom*>::__type std::__fill_n_a<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [117]
+-----------------------------------------------
+                0.00    0.00       1/1           void std::__uninitialized_fill_n_a<Atom*, unsigned long, Atom, Atom>(Atom*, unsigned long, Atom const&, std::allocator<Atom>&) [119]
+[118]    0.0    0.00    0.00       1         void std::uninitialized_fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [118]
+                0.00    0.00       1/1           void std::__uninitialized_fill_n<true>::__uninit_fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [109]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [110]
+[119]    0.0    0.00    0.00       1         void std::__uninitialized_fill_n_a<Atom*, unsigned long, Atom, Atom>(Atom*, unsigned long, Atom const&, std::allocator<Atom>&) [119]
+                0.00    0.00       1/1           void std::uninitialized_fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [118]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<Atom, std::allocator<Atom> >::_M_check_len(unsigned long, char const*) const [101]
+[120]    0.0    0.00    0.00       1         unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&) [120]
+-----------------------------------------------
+                0.00    0.00       1/1           void std::__uninitialized_fill_n<true>::__uninit_fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [109]
+[121]    0.0    0.00    0.00       1         Atom* std::fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [121]
+                0.00    0.00       1/7           std::_Niter_base<Atom*>::iterator_type std::__niter_base<Atom*>(Atom*) [69]
+                0.00    0.00       1/1           __gnu_cxx::__enable_if<!(std::__is_scalar<Atom>::__value), Atom*>::__type std::__fill_n_a<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [117]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+  [92] _GLOBAL__sub_I_main (scf.cc) [104] std::_Vector_base<Atom, std::allocator<Atom> >::_M_allocate(unsigned long) [91] void std::_Destroy<Atom*, Atom>(Atom*, Atom*, std::allocator<Atom>&)
+  [73] init_array(int)       [105] std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_impl::_Vector_impl() [9] daxpy_
+  [63] zero_array(double*, int) [106] std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_impl::~_Vector_impl() [10] ddot_
+  [65] init_matrix(int, int)  [82] std::_Vector_base<Atom, std::allocator<Atom> >::_M_deallocate(Atom*, unsigned long) [19] dgemm_
+  [59] zero_matrix(double**, int, int) [70] std::_Vector_base<Atom, std::allocator<Atom> >::_M_get_Tp_allocator() [11] dgemv_
+  [74] read_1e_ints(char const*, int) [107] std::_Vector_base<Atom, std::allocator<Atom> >::_Vector_base() [12] dger_
+  [93] read_2e_ints(char const*, int) [108] std::_Vector_base<Atom, std::allocator<Atom> >::~_Vector_base() [2] disnan_
+  [66] delete_matrix(double**) [83] Atom* std::__uninitialized_copy<true>::__uninit_copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [20] dlaev2_
+  [94] read_geometry(char const*, std::vector<Atom, std::allocator<Atom> >&) [109] void std::__uninitialized_fill_n<true>::__uninit_fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [3] dlaisnan_
+  [95] __static_initialization_and_destruction_0(int, int) (scf.cc) [110] std::vector<Atom, std::allocator<Atom> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [21] dlanst_
+  [60] C_DGEMM(char, char, int, int, int, double, double*, int, double*, int, double, double*, int) [111] std::vector<Atom, std::allocator<Atom> >::end() [22] dlansy_
+  [62] C_DSYEV(char, char, int, double*, int, double*, double*, int) [112] std::vector<Atom, std::allocator<Atom> >::begin() [4] dlapy2_
+  [68] print_mat(double**, int, int, _IO_FILE*) [113] std::vector<Atom, std::allocator<Atom> >::insert(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >, unsigned long, Atom const&) [7] dlarf_
+  [96] __gnu_cxx::new_allocator<Atom>::deallocate(Atom*, unsigned long) [114] std::vector<Atom, std::allocator<Atom> >::resize(unsigned long, Atom) [8] dlarfg_
+  [97] __gnu_cxx::new_allocator<Atom>::allocate(unsigned long, void const*) [115] std::vector<Atom, std::allocator<Atom> >::vector() [1] dlartg_
+  [98] __gnu_cxx::new_allocator<Atom>::new_allocator() [116] std::vector<Atom, std::allocator<Atom> >::~vector() [5] dlasr_
+  [99] __gnu_cxx::new_allocator<Atom>::~new_allocator() [61] std::vector<Atom, std::allocator<Atom> >::operator[](unsigned long) [13] dnrm2_
+  [76] __gnu_cxx::__alloc_traits<std::allocator<Atom> >::max_size(std::allocator<Atom> const&) [117] __gnu_cxx::__enable_if<!(std::__is_scalar<Atom>::__value), Atom*>::__type std::__fill_n_a<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [23] dorg2l_
+  [77] __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::__normal_iterator(Atom* const&) [72] std::_Miter_base<Atom*>::iterator_type std::__miter_base<Atom*>(Atom*) [24] dorgql_
+ [100] __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::difference_type __gnu_cxx::operator-<Atom*, std::vector<Atom, std::allocator<Atom> > >(__gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > > const&, __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > > const&) [69] std::_Niter_base<Atom*>::iterator_type std::__niter_base<Atom*>(Atom*) [25] dorgtr_
+  [75] __gnu_cxx::new_allocator<Atom>::max_size() const [84] Atom* std::__copy_move_a<false, Atom*, Atom*>(Atom*, Atom*, Atom*) [6] dscal_
+  [71] __gnu_cxx::__normal_iterator<Atom*, std::vector<Atom, std::allocator<Atom> > >::base() const [85] Atom* std::__copy_move_a2<false, Atom*, Atom*>(Atom*, Atom*, Atom*) [26] dsteqr_
+  [78] std::_Vector_base<Atom, std::allocator<Atom> >::_M_get_Tp_allocator() const [86] Atom* std::uninitialized_copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [18] dswap_
+ [101] std::vector<Atom, std::allocator<Atom> >::_M_check_len(unsigned long, char const*) const [118] void std::uninitialized_fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [27] dsyev_
+  [64] std::vector<Atom, std::allocator<Atom> >::size() const [87] Atom* std::__uninitialized_copy_a<Atom*, Atom*, Atom>(Atom*, Atom*, Atom*, std::allocator<Atom>&) [14] dsymv_
+  [79] std::vector<Atom, std::allocator<Atom> >::max_size() const [119] void std::__uninitialized_fill_n_a<Atom*, unsigned long, Atom, Atom>(Atom*, unsigned long, Atom const&, std::allocator<Atom>&) [15] dsyr2_
+ [102] std::allocator<Atom>::allocator() [88] Atom* std::__uninitialized_move_if_noexcept_a<Atom*, Atom*, std::allocator<Atom> >(Atom*, Atom*, Atom*, std::allocator<Atom>&) [28] dsytd2_
+ [103] std::allocator<Atom>::~allocator() [120] unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&) [29] dsytrd_
+  [67] std::_Iter_base<Atom*, false>::_S_base(Atom*) [89] Atom* std::copy<Atom*, Atom*>(Atom*, Atom*, Atom*) [16] iladlc_
+  [80] Atom* std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<Atom>(Atom const*, Atom const*, Atom*) [121] Atom* std::fill_n<Atom*, unsigned long, Atom>(Atom*, unsigned long, Atom const&) [17] ilaenv_
+  [81] void std::_Destroy_aux<true>::__destroy<Atom*>(Atom*, Atom*) [90] void std::_Destroy<Atom*>(Atom*, Atom*)
