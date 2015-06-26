@@ -1,0 +1,68 @@
+Data structure = data + logical relationships between the data. e.g., set of real numbers, matrix, dictionary, the world wide web
+
+Algorithm = step-by-step precisely defined recipe for computing output values from input values, e.g., Euclids algorithm
+
+There is no best choice! "Best" data structure and algorithm can only be understood realtive to the particular computing model.
+
+Abstract data structures:
+    -operations: size(), iteration over elements, remove(x), insert(x)
+    -sequence: also have begin()
+    -associative container: also have find(K), count(K)
+    -2D array: size(), [i,j] = direct access to element in row i and column j
+
+Concrete Data structuresL
+    -Concepts you encounter in your work often have natural affinity to particular abstract data structures
+        >array of basis function values ata a particular point, sequence of trajectory snapshots = sequence
+        >database of computations, list of atoms contributing to a particular orbital = associative container
+    -But the same set of data can be thought of in different abstract ways
+
+    -Sequence: vector, (linked) list, stack
+    -Associative container: hash table, (multi)map
+
+    -Vector: sequential storage of elements in memory = v[i] is next to v[i-1] and v[i+1],
+            pointer to element i = pointer to element0+ i*sizeof(element), hence cheap (O(1) cost) access
+            to each element. Expensive ("O(n) cost") element insertion/deletion. No storage overhead.
+
+    -Linked listsL non-sequential sotrage of elements in memory. Each node
+    stores the value + the pointer(s) to the neighbor. O(1) access to next
+    element. O(n) access to the i-th element. O(1) insertions/deletion
+    O(n) storage overhead
+
+    -More sequences: stack, queue, deque. 
+    
+    -Hash table: like a dictionary in python. pos({key, value}) =
+     hashfunc(key). No unique iteration order, each node stores the key and value.
+     On average: O(1) access to the i-th element, insertion and deletion. At worst:
+     O(n) access to the i-th element, insertion, deletion. No storage overhead.
+     Good hash function is key!
+
+    -Trees: no unique iteration order. Each node stores the value+the pointers
+     to the children. O(1) access to the next element, O(log n) access to the ith
+     element
+
+    -Matrix - multidimentsional arrays. Sequential storage of elements in
+     rows, not columns. O(1) access to next element. O(1) access to any
+     element. No storage overhead, can be generalized to any number of dimensions
+     as well as symmetries.Standard C/C++ implementatin is array of pointers
+     to rows. (note, fortran is column major, C++ is row major)
+
+Big O notation
+    -Asymptotic behavior of algorithms (when problem size becomes large) is
+     useful to characterize in rough terms using the Big O (and related) notation.
+
+    -Big Omega = asymptotic lower bound
+
+    -Big theta = asymptotic TIGHT bound
+
+Classic algorithms
+    -Sort: input = {i1, i2, i3...in}, output{i1', i2', i3',...in'} such that
+           i1'<i2', etc.
+    -Strassen algorithm for matrix mult: reduces calculation from 8 mults and
+     4 adds, to 7 mults and 18 adds (actualy faster bc add is faster than mult),
+     faster for larger matrices. Doesn't pay off for small matrices
+
+
+
+
+
+

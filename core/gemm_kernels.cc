@@ -89,6 +89,56 @@ void dgemm_blocked(const double* a, const double* b, double* c, size_t n,
 
   }
 }
+//Here we are implimenting the strassen algorithm. This requires dividing the matrix up into 4 equal blocks
+void dgemm_strassen(const double* a, const double* b, double* c, size_t n,
+                   size_t nrepeats, size_t bsize) {
+
+  // number of blocks
+  auto nb = 2;
+  auto bsize = n/nb;
+  auto bsize2 = bsize*bsize;
+  assert(n % bsize == 0);
+
+// we need to calculate elements of m1 - m7 from the blocks of a and b
+
+  for (int r = 0; r < nrepeats; ++r) {
+
+    size_t ij = 0;
+    for (int Ib = 0; Ib < nb; ++Ib) {
+      for (int Jb = 0; Jb < nb; ++Jb) {
+        for (int Kb = 0; Kb < nb; ++Kb) {
+
+          const int istart = Ib * bsize;
+          const int ifence = istart + bsize;
+          for (int i = istart; i < ifence; ++i) {
+
+            const int jstart = Jb * bsize;
+            const int jfence = jstart + bsize;
+            size_t ij = i * n + jstart;
+            for (int j = jstart; j < jfence; ++j, ++ij) {
+
+              double array;
+
+              const int kstart = Kb * bsize;
+              const int kfence = kstart + bsize;
+              size_t ik = i * n + kstart;
+              size_t kj = kstart * n + j;
+
+#pragma ivdep
+              for (int k = kstart; k < kfence; ++k, ++ik, kj += n) {
+                v += a[ik] * b[kj];
+              }
+
+              c[ij] = v;
+            }
+          }
+
+        }
+      }
+    }
+
+  }
+}
 
 void dgemm_blas(const double* a, const double* b, double* c, size_t n,
                 size_t nrepeats) {
