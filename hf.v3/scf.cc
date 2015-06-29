@@ -649,16 +649,14 @@ Matrix compute_2body_fock(const std::vector<libint2::Shell>& shells,
   const auto n = nbasis(shells);
   Matrix Gtotal = Matrix::Zero(n,n);
 
-  long count = 0;
+  const int MAX_NTHREAD=16;
+  Matrix Gs[MAX_NTHREAD];
+  libint2::TwoBodyEngine<libint2::Coulomb> engines[MAX_NTHREAD];
 
-#pragma omp parallel
- {
-  const int tid = omp_get_thread_num();
-  const int nthread =omp_get_num_threads();
-  Matrix G = Matrix::Zero(n,n);//each thread gets own G matrix
-  // construct the 2-electron repulsion integrals engine
-  libint2::TwoBodyEngine<libint2::Coulomb> engine(max_nprim(shells), max_l(shells), 0);
-
+  for(int i=0; i< MAX_NTHREAD; i++){
+    Gs[i] = Matrix::Zero(n,n);
+    engines[i] = libint2::TwoBodyEngine<libint2::Coulomb> engine(max_nprim(shells), max_l(shells), 0);
+  }
   auto shell2bf = map_shell_to_basis_function(shells);
 
   // The problem with the simple Fock builder is that permutational symmetries of the Fock,
@@ -688,7 +686,7 @@ Matrix compute_2body_fock(const std::vector<libint2::Shell>& shells,
   // (ab|cd) contributes. STOP READING and try to figure it out yourself. (to check your answer see below)
 
   // loop over permutatinally-unique set of shells
-
+#pragma omp parallel for
   for(auto s1=0; s1!=shells.size(); ++s1) {
 
     auto bf1_first = shell2bf[s1]; // first basis function in this shell
@@ -716,8 +714,6 @@ Matrix compute_2body_fock(const std::vector<libint2::Shell>& shells,
           auto s12_34_deg = (s1 == s3) ? (s2 == s4 ? 1.0 : 2.0) : 2.0;
           auto s1234_deg = s12_deg * s34_deg * s12_34_deg;
 
-          if ((count%nthread) == tid) {
-
           const auto* buf = engine.compute(shells[s1], shells[s2], shells[s3], shells[s4]);
 
           // ANSWER
@@ -742,28 +738,23 @@ Matrix compute_2body_fock(const std::vector<libint2::Shell>& shells,
                   const auto value = buf[f1234];
                   const auto value_scal_by_deg = value * s1234_deg;
 
-                  G(bf1,bf2) += D(bf3,bf4) * value_scal_by_deg;
-                  G(bf3,bf4) += D(bf1,bf2) * value_scal_by_deg;
-                  G(bf1,bf3) -= 0.25 * D(bf2,bf4) * value_scal_by_deg;
-                  G(bf2,bf4) -= 0.25 * D(bf1,bf3) * value_scal_by_deg;
-                  G(bf1,bf4) -= 0.25 * D(bf2,bf3) * value_scal_by_deg;
-                  G(bf2,bf3) -= 0.25 * D(bf1,bf4) * value_scal_by_deg;
+                  Gs(bf1,bf2) += D(bf3,bf4) * value_scal_by_deg;
+                  Gs(bf3,bf4) += D(bf1,bf2) * value_scal_by_deg;
+                  Gs(bf1,bf3) -= 0.25 * D(bf2,bf4) * value_scal_by_deg;
+                  Gs(bf2,bf4) -= 0.25 * D(bf1,bf3) * value_scal_by_deg;
+                  Gs(bf1,bf4) -= 0.25 * D(bf2,bf3) * value_scal_by_deg;
+                  Gs(bf2,bf3) -= 0.25 * D(bf1,bf4) * value_scal_by_deg;
                 }
               }
             }
           }
-         }
-         count++;
         }
-      }
+      }      
     }
   }
-#pragma omp critical
- {
-  Gtotal += G;
- }
-} //end of parallel section
-  // symmetrize the result and return
+  
+   for(int i= 0; i<MAX_NTHREAD; i++) Gtotal+=Gs[i];
+   // symmetrize the result and return
   Matrix Gt = Gtotal.transpose();
   return 0.5 * (Gtotal + Gt);
 }
