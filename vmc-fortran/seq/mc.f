@@ -3,7 +3,7 @@
       parameter (npoint=3360, neq=4000, nstep=16000)
       dimension x(6,npoint), psix(npoint), ex(npoint)
       data esq/0.0d0/
-c
+c     
 c     Monte Carlo Test Program ... evaluates the expectation 
 c     value of the energy for a simple wavefunction for helium.
 c
@@ -15,8 +15,8 @@ c     in a 2x2x2 cube. Equilibriate for neq moves then compute averages
 c     for nstep moves.
 c
       call init(npoint, x, psix)
-      call mover(x, psix, ex, e, esq, npoint, neq)
-      call mover(x, psix, ex, e, esq, npoint, nstep)
+      call mover(x, psix, ex, e, esq, npoint, neq) !equilibrating
+      call mover(x, psix, ex, e, esq, npoint, nstep) !real run
 c
 c     Write out the results before terminating
 c
@@ -25,6 +25,8 @@ c
  2    format(' energy =',f10.6,' +/-',f9.6)
 c
       end
+
+c =====================================================================
       subroutine mover(x, psix, ex, e, esq, npoint, nstep)
       implicit double precision (a-h, o-z)
       dimension x(6,npoint), psix(npoint), ex(npoint)
@@ -51,6 +53,7 @@ c
 c
 c     block averages every 100 moves to reduce statistical correlation
 c
+
          if (mod(istep,100).eq.0) then
             eb = eb / dble(npoint*100)
             e = e + eb
@@ -65,6 +68,8 @@ c
       esq = esq / dble(nstep/100)
 c
       end
+
+c======================================================================
       subroutine sample(x, psix, ex)
       implicit double precision (a-h, o-z)
       dimension x(6), xnew(6)
@@ -76,9 +81,13 @@ c     point and the old point.
 c
 c     generate trial point and info at the new point
 c
+!$OMP PARALLEL DEFAULT(shared)
+!$OMP DO
       do 10 i = 1,6
          xnew(i) = x(i) + (drandom()-0.5d0)*0.3d0
  10   continue
+!$OMP END DO
+!$OMP END PARALLEL
       call rvals(xnew, r1, r2, r12, r1dr2)
       psinew = psi(r1, r2, r12)
 c
@@ -96,18 +105,23 @@ c
       ex = elocal(r1, r2, r12, r1dr2)
 c     
       end
+
+c ============================================================
       subroutine rvals(x, r1, r2, r12, r1dr2)
       implicit double precision (a-h, o-z)
       dimension x(6)
 c
 c     compute required distances etc.
 c
+
       r1 = dsqrt(x(1)**2 + x(2)**2 + x(3)**2)
       r2 = dsqrt(x(4)**2 + x(5)**2 + x(6)**2)
       r12 = dsqrt((x(1)-x(4))**2 + (x(2)-x(5))**2 + (x(3)-x(6))**2)
       r1dr2 = x(1)*x(4) + x(2)*x(5) + x(3)*x(6)
 c
       end
+
+c =============================================================
       double precision function psi(r1, r2, r12)
       implicit double precision (a-h, o-z)
 c
@@ -116,6 +130,7 @@ c
       psi = dexp(-2.0d0*(r1+r2)) * (1.0d0 + 0.5d0*r12)
 c
       end
+c =============================================================
       double precision function elocal(r1, r2, r12, r1dr2)
       implicit double precision (a-h, o-z)
 c
@@ -126,6 +141,7 @@ c
       elocal = -4.0d0 + g / f
 c
       end
+c =============================================================
       subroutine init(npoint, x, psix)
       implicit double precision (a-h, o-z)
       dimension x(6,npoint), psix(npoint)
@@ -133,7 +149,9 @@ c
 c     distribute points in a 2x2x2 cube.
 c
 c      call init_random_seed() 
-c      
+c     
+!$OMP PARALLEL DEFAULT(shared)
+!$OMP DO 
       do 10 ipoint = 1,npoint
          do 20 i = 1,6
             x(i,ipoint) = (drandom() - 0.5d0) * 2.0d0
@@ -141,8 +159,11 @@ c
          call rvals(x(1,ipoint), r1, r2, r12, r1dr2)
          psix(ipoint) = psi(r1, r2, r12)
  10   continue
+!$OMP END DO
+!$OMP END PARALLEL
 c
       end
+c =============================================================
       double precision function drandom()
 c https://gcc.gnu.org/onlinedocs/gfortran/RANDOM_005fNUMBER.html
       double precision r

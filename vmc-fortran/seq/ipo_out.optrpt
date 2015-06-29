@@ -1,0 +1,238 @@
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: disabled
+  -inline-max-per-compile: disabled
+
+
+Begin optimization report for: HE
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (HE) [1] mc.f(1,15)
+  -> (17,12) INIT
+  -> CP_CLONE (18,12) MOVER..0
+  -> CP_CLONE (19,12) MOVER..1
+
+===========================================================================
+
+Begin optimization report for: MOVER..0
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (MOVER..0) [2] mc.f(30,18)
+  CLONED FROM: MOVER(X,X,X,X,X,3360,4000)
+  -> INLINE: (45,18) SAMPLE
+    -> (87,28) DRANDOM
+    -> INLINE: (91,12) RVALS
+    -> INLINE: (92,16) PSI
+    -> INLINE: (97,21) DRANDOM
+    -> INLINE: (103,15) RVALS
+    -> INLINE: (105,12) ELOCAL
+
+
+    Report from: OpenMP optimizations [openmp]
+
+OpenMP Construct at mc.f(84,7) inlined into mc.f(45,18)
+   remark #16201: OpenMP DEFINED REGION WAS PARALLELIZED
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at mc.f(40,10)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at mc.f(44,13)
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at mc.f(98,13) inlined into mc.f(45,18)
+         remark #25401: memcopy(with guard) generated
+         remark #25401: memcopy(with guard) generated
+         remark #15300: LOOP WAS VECTORIZED
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at mc.f(50,13)
+   <Peeled>
+   LOOP END
+
+   LOOP BEGIN at mc.f(50,13)
+      remark #15300: LOOP WAS VECTORIZED
+   LOOP END
+
+   LOOP BEGIN at mc.f(50,13)
+   <Remainder>
+      remark #15301: REMAINDER LOOP WAS VECTORIZED
+   LOOP END
+
+   LOOP BEGIN at mc.f(50,13)
+   <Remainder>
+   LOOP END
+LOOP END
+
+LOOP BEGIN at mc.f(86,10) inlined into mc.f(45,18)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+LOOP END
+===========================================================================
+
+Begin optimization report for: DRANDOM
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (DRANDOM) [3] mc.f(167,33)
+
+===========================================================================
+
+Begin optimization report for: MOVER..1
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (MOVER..1) [4] mc.f(30,18)
+  CLONED FROM: MOVER(X,X,X,X,X,3360,16000)
+  -> INLINE: (45,18) SAMPLE
+    -> (87,28) DRANDOM
+    -> INLINE: (91,12) RVALS
+    -> INLINE: (92,16) PSI
+    -> INLINE: (97,21) DRANDOM
+    -> INLINE: (103,15) RVALS
+    -> INLINE: (105,12) ELOCAL
+
+
+    Report from: OpenMP optimizations [openmp]
+
+OpenMP Construct at mc.f(84,7) inlined into mc.f(45,18)
+   remark #16201: OpenMP DEFINED REGION WAS PARALLELIZED
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at mc.f(40,10)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at mc.f(44,13)
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at mc.f(98,13) inlined into mc.f(45,18)
+         remark #25401: memcopy(with guard) generated
+         remark #25401: memcopy(with guard) generated
+         remark #15300: LOOP WAS VECTORIZED
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at mc.f(50,13)
+   <Peeled>
+   LOOP END
+
+   LOOP BEGIN at mc.f(50,13)
+      remark #15300: LOOP WAS VECTORIZED
+   LOOP END
+
+   LOOP BEGIN at mc.f(50,13)
+   <Remainder>
+      remark #15301: REMAINDER LOOP WAS VECTORIZED
+   LOOP END
+
+   LOOP BEGIN at mc.f(50,13)
+   <Remainder>
+   LOOP END
+LOOP END
+
+LOOP BEGIN at mc.f(86,10) inlined into mc.f(45,18)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+LOOP END
+===========================================================================
+
+Begin optimization report for: SAMPLE
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (SAMPLE) mc.f(73,18)
+
+===========================================================================
+
+Begin optimization report for: PSI
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (PSI) mc.f(125,33)
+
+===========================================================================
+
+Begin optimization report for: RVALS
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (RVALS) mc.f(110,18)
+
+===========================================================================
+
+Begin optimization report for: ELOCAL
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (ELOCAL) mc.f(134,33)
+
+===========================================================================
+
+Begin optimization report for: MOVER
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (MOVER) mc.f(30,18)
+
+===========================================================================
+
+Begin optimization report for: INIT
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (INIT) [10] mc.f(145,18)
+  -> (157,28) DRANDOM
+  -> INLINE: (159,15) RVALS
+  -> INLINE: (160,25) PSI
+
+
+    Report from: OpenMP optimizations [openmp]
+
+OpenMP Construct at mc.f(153,7)
+   remark #16201: OpenMP DEFINED REGION WAS PARALLELIZED
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at mc.f(155,10)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+   remark #15346: vector dependence: assumed OUTPUT dependence between  line 157 and  line 157
+
+   LOOP BEGIN at mc.f(156,13)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+   LOOP END
+LOOP END
+===========================================================================
+
+    Report from: Profile guided optimizations [pgo]
+
+
+
+Profile feedback used a statically estimated profile for the following routines:
+
+  File: mc.f
+        HE(1)
+        MOVER..1(30)
+        MOVER..0(30)
+        INIT(145)
+        DRANDOM(167)
+
+
+  0 out of 5 routine(s) used training profile data for PGO feedback
+  0 out of 5 routine(s) were unable to use training profile data for PGO feedback
+  0 out of 5 routine(s) were unable to find training profile data for PGO feedback
+  5 out of 5 routine(s) used a static estimate profile for PGO feedback
+
+
+

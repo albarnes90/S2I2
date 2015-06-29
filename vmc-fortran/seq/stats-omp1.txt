@@ -1,0 +1,216 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 33.03      8.64     8.64                             for__acquire_semaphore_threaded
+ 23.74     14.85     6.21 80659996     0.00     0.00  drandom_
+ 18.41     19.67     4.82                             for_random_number
+  8.91     22.00     2.33                             __kmp_hyper_barrier_release(barrier_type, kmp_info*, int, int, int, void*)
+  7.26     23.90     1.90                             exp.L
+  4.70     25.13     1.23        1     1.23     7.44  MAIN__
+  1.22     25.45     0.32                             writev
+  0.76     25.65     0.20                             __profile_frequency
+  0.48     25.77     0.13                             for_random_number_quad
+  0.46     25.89     0.12                             exp
+  0.42     26.00     0.11                             sched_getscheduler
+  0.31     26.08     0.08                             __kmp_hyper_barrier_gather(barrier_type, kmp_info*, int, int, void (*)(void*, void*), void*)
+  0.19     26.13     0.05                             __kmp_yield
+  0.04     26.14     0.01                             clone
+  0.04     26.15     0.01                             cvtas__nan_x
+  0.04     26.16     0.01                             for__enable_asynch_deliv_private
+  0.00     26.16     0.00       15     0.00     0.00  init_
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.04% of 26.16 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     33.0    8.64    0.00                 for__acquire_semaphore_threaded [1]
+-----------------------------------------------
+                                   1             MAIN__ [2]
+                1.23    6.21       1/1           main [3]
+[2]     28.4    1.23    6.21       1+1       MAIN__ [2]
+                6.21    0.00 80640001/80659996     drandom_ [4]
+                0.00    0.00       1/15          init_ [18]
+                                   1             MAIN__ [2]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]     28.4    0.00    7.44                 main [3]
+                1.23    6.21       1/1           MAIN__ [2]
+-----------------------------------------------
+                             322560000             drandom_ [4]
+                0.00    0.00   19995/80659996     init_ [18]
+                6.21    0.00 80640001/80659996     MAIN__ [2]
+[4]     23.7    6.21    0.00 80659996+322560000 drandom_ [4]
+                             322560000             drandom_ [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]     18.4    4.82    0.00                 for_random_number [5]
+-----------------------------------------------
+                                                 <spontaneous>
+[6]      8.9    2.33    0.00                 __kmp_hyper_barrier_release(barrier_type, kmp_info*, int, int, int, void*) [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[7]      7.3    1.90    0.00                 exp.L [7]
+-----------------------------------------------
+                                                 <spontaneous>
+[8]      1.2    0.32    0.00                 writev [8]
+-----------------------------------------------
+                                                 <spontaneous>
+[9]      0.8    0.20    0.00                 __profile_frequency [9]
+-----------------------------------------------
+                                                 <spontaneous>
+[10]     0.5    0.13    0.00                 for_random_number_quad [10]
+-----------------------------------------------
+                                                 <spontaneous>
+[11]     0.5    0.12    0.00                 exp [11]
+-----------------------------------------------
+                                                 <spontaneous>
+[12]     0.4    0.11    0.00                 sched_getscheduler [12]
+-----------------------------------------------
+                                                 <spontaneous>
+[13]     0.3    0.08    0.00                 __kmp_hyper_barrier_gather(barrier_type, kmp_info*, int, int, void (*)(void*, void*), void*) [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[14]     0.2    0.05    0.00                 __kmp_yield [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[15]     0.0    0.01    0.00                 clone [15]
+-----------------------------------------------
+                                                 <spontaneous>
+[16]     0.0    0.01    0.00                 cvtas__nan_x [16]
+-----------------------------------------------
+                                                 <spontaneous>
+[17]     0.0    0.01    0.00                 for__enable_asynch_deliv_private [17]
+-----------------------------------------------
+                0.00    0.00       1/15          MAIN__ [2]
+                0.00    0.00      14/15          __kmp_invoke_microtask [19]
+[18]     0.0    0.00    0.00      15         init_ [18]
+                0.00    0.00   19995/80659996     drandom_ [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[19]     0.0    0.00    0.00                 __kmp_invoke_microtask [19]
+                0.00    0.00      14/15          init_ [18]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+   [2] MAIN__                 [16] cvtas__nan_x            [5] for_random_number
+  [13] __kmp_hyper_barrier_gather(barrier_type, kmp_info*, int, int, void (*)(void*, void*), void*) [4] drandom_ [10] for_random_number_quad
+   [6] __kmp_hyper_barrier_release(barrier_type, kmp_info*, int, int, int, void*) [11] exp [18] init_
+  [14] __kmp_yield             [7] exp.L                  [12] sched_getscheduler
+   [9] __profile_frequency     [1] for__acquire_semaphore_threaded [8] writev
+  [15] clone                  [17] for__enable_asynch_deliv_private

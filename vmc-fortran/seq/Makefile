@@ -1,5 +1,5 @@
 FC = ifort
-FFLAGS = -O3 
+FFLAGS = -fast -qopenmp -p -opt-report 
 
 TARGETS = mc
 
