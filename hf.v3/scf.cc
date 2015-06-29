@@ -647,8 +647,15 @@ Matrix compute_2body_fock(const std::vector<libint2::Shell>& shells,
                           const Matrix& D) {
 
   const auto n = nbasis(shells);
-  Matrix G = Matrix::Zero(n,n);
+  Matrix Gtotal = Matrix::Zero(n,n);
 
+  long count = 0;
+
+#pragma omp parallel
+ {
+  const int tid = omp_get_thread_num();
+  const int nthread =omp_get_num_threads();
+  Matrix G = Matrix::Zero(n,n);//each thread gets own G matrix
   // construct the 2-electron repulsion integrals engine
   libint2::TwoBodyEngine<libint2::Coulomb> engine(max_nprim(shells), max_l(shells), 0);
 
@@ -681,6 +688,7 @@ Matrix compute_2body_fock(const std::vector<libint2::Shell>& shells,
   // (ab|cd) contributes. STOP READING and try to figure it out yourself. (to check your answer see below)
 
   // loop over permutatinally-unique set of shells
+
   for(auto s1=0; s1!=shells.size(); ++s1) {
 
     auto bf1_first = shell2bf[s1]; // first basis function in this shell
@@ -707,6 +715,8 @@ Matrix compute_2body_fock(const std::vector<libint2::Shell>& shells,
           auto s34_deg = (s3 == s4) ? 1.0 : 2.0;
           auto s12_34_deg = (s1 == s3) ? (s2 == s4 ? 1.0 : 2.0) : 2.0;
           auto s1234_deg = s12_deg * s34_deg * s12_34_deg;
+
+          if ((count%nthread) == tid) {
 
           const auto* buf = engine.compute(shells[s1], shells[s2], shells[s3], shells[s4]);
 
@@ -742,13 +752,18 @@ Matrix compute_2body_fock(const std::vector<libint2::Shell>& shells,
               }
             }
           }
-
+         }
+         count++;
         }
       }
     }
   }
-
+#pragma omp critical
+ {
+  Gtotal += G;
+ }
+} //end of parallel section
   // symmetrize the result and return
-  Matrix Gt = G.transpose();
-  return 0.5 * (G + Gt);
+  Matrix Gt = Gtotal.transpose();
+  return 0.5 * (Gtotal + Gt);
 }
