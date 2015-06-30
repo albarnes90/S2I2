@@ -1,0 +1,121 @@
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: disabled
+  -inline-max-per-compile: disabled
+
+
+Begin optimization report for: main()
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main()) [1] mc5.cc(60,12)
+  -> INLINE: (70,16) drand()
+  -> INLINE: (76,9) vrand(int, double *, double, double)
+  -> INLINE: (78,13) kernel(double &, double &, double, double)
+  -> INLINE: (84,23) cycle_count()
+  -> INLINE: (86,9) vrand(int, double *, double, double)
+  -> INLINE: (88,9) vrand(int, double *, double, double)
+  -> INLINE: (99,22) cycle_count()
+  -> INLINE: (102,15) std::ios_base::precision(std::ios_base *, std::streamsize)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at mc5.cc(69,15)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+   remark #25456: Number of Array Refs Scalar Replaced In Loop: 1
+LOOP END
+
+LOOP BEGIN at mc5.cc(75,18)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at mc5.cc(77,9)
+      remark #15300: LOOP WAS VECTORIZED
+   LOOP END
+LOOP END
+
+LOOP BEGIN at mc5.cc(85,18)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at mc5.cc(89,9)
+      remark #25045: Fused Loops: ( 89 96 )
+
+      remark #15301: FUSED LOOP WAS VECTORIZED
+      remark #25456: Number of Array Refs Scalar Replaced In Loop: 2
+   LOOP END
+
+   LOOP BEGIN at mc5.cc(96,9)
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: __sti__$E()
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (__sti__$E()) [8] <compiler generated>
+
+===========================================================================
+
+Begin optimization report for: vrand(int, double *, double, double)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (vrand(int, double *, double, double)) mc5.cc(55,50)
+
+===========================================================================
+
+Begin optimization report for: kernel(double &, double &, double, double)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (kernel(double &, double &, double, double)) mc5.cc(44,61)
+
+===========================================================================
+
+Begin optimization report for: drand()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (drand()) mc5.cc(39,16)
+
+===========================================================================
+
+Begin optimization report for: cycle_count()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (cycle_count()) timerstuff.h(6,38)
+
+===========================================================================
+
+    Report from: Profile guided optimizations [pgo]
+
+
+
+Profile feedback used a statically estimated profile for the following routines:
+
+  File: <compiler generated>
+        __sti__$E()
+
+  File: /usr/include/c++/4.4.6/bits/char_traits.h
+        std::char_traits<char>::length(const std::char_traits<char>::char_type *)(263)
+
+  File: mc5.cc
+        main()(60)
+
+
+  0 out of 3 routine(s) used training profile data for PGO feedback
+  0 out of 3 routine(s) were unable to use training profile data for PGO feedback
+  0 out of 3 routine(s) were unable to find training profile data for PGO feedback
+  3 out of 3 routine(s) used a static estimate profile for PGO feedback
+
+
+

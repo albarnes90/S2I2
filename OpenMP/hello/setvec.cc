@@ -4,6 +4,7 @@ int main(int argc, const char** argv) {
   const int N=10;
   double a[N];
 
+#pragma omp parallel for 
   for (int i=0; i<N; i++) a[i] = i;
 
   for (int i=0; i<N; i++) std::cout << a[i] << " ";

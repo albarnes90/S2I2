@@ -1,0 +1,146 @@
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: disabled
+  -inline-max-per-compile: disabled
+
+
+Begin optimization report for: main()
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main()) [1] bench.cc(34,12)
+  -> INLINE: (48,34) test(int, double, double *, double *)
+    -> DELETED: (13,17) std::max<int>(const int &, const int &)
+    -> INLINE: (16,26) cycle_count()
+    -> INLINE: (27,25) cycle_count()
+    -> DELETED: (28,19) std::min<uint64_t>(const uint64_t &, const uint64_t &)
+  -> INLINE: (52,34) test(int, double, double *, double *)
+    -> DELETED: (13,17) std::max<int>(const int &, const int &)
+    -> INLINE: (16,26) cycle_count()
+    -> INLINE: (27,25) cycle_count()
+    -> DELETED: (28,19) std::min<uint64_t>(const uint64_t &, const uint64_t &)
+  -> INLINE: (56,34) test(int, double, double *, double *)
+    -> DELETED: (13,17) std::max<int>(const int &, const int &)
+    -> INLINE: (16,26) cycle_count()
+    -> INLINE: (27,25) cycle_count()
+    -> DELETED: (28,19) std::min<uint64_t>(const uint64_t &, const uint64_t &)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at bench.cc(40,5)
+<Peeled>
+LOOP END
+
+LOOP BEGIN at bench.cc(40,5)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at bench.cc(40,5)
+<Remainder>
+LOOP END
+
+LOOP BEGIN at bench.cc(43,5)
+   remark #25408: memset generated
+   remark #15398: loop was not vectorized: loop was transformed to memset or memcpy
+LOOP END
+
+LOOP BEGIN at bench.cc(17,9) inlined into bench.cc(48,34)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+LOOP END
+
+LOOP BEGIN at bench.cc(17,9) inlined into bench.cc(52,34)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+LOOP END
+
+LOOP BEGIN at bench.cc(17,9) inlined into bench.cc(56,34)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+LOOP END
+
+
+Non-optimizable loops:
+
+
+LOOP BEGIN at bench.cc(47,5)
+   remark #15536: loop was not vectorized: inner loop throttling prevents vectorization of this outer loop. Refer to inner loop message for more details.
+
+   LOOP BEGIN at bench.cc(15,5) inlined into bench.cc(48,34)
+      remark #15526: loop was not vectorized: ASM code cannot be vectorized   [ timerstuff.h(9,0) ]
+   LOOP END
+LOOP END
+
+LOOP BEGIN at bench.cc(51,5)
+   remark #15536: loop was not vectorized: inner loop throttling prevents vectorization of this outer loop. Refer to inner loop message for more details.
+
+   LOOP BEGIN at bench.cc(15,5) inlined into bench.cc(52,34)
+      remark #15526: loop was not vectorized: ASM code cannot be vectorized   [ timerstuff.h(9,0) ]
+   LOOP END
+LOOP END
+
+LOOP BEGIN at bench.cc(55,5)
+   remark #15536: loop was not vectorized: inner loop throttling prevents vectorization of this outer loop. Refer to inner loop message for more details.
+
+   LOOP BEGIN at bench.cc(15,5) inlined into bench.cc(56,34)
+      remark #15526: loop was not vectorized: ASM code cannot be vectorized   [ timerstuff.h(9,0) ]
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+bench.cc(44,9):remark #34026: call to memset implemented as a call to optimized library version
+===========================================================================
+
+Begin optimization report for: __sti__$E()
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (__sti__$E()) [10] <compiler generated>
+
+===========================================================================
+
+Begin optimization report for: test(int, double, double *, double *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (test(int, double, double *, double *)) bench.cc(11,80)
+
+===========================================================================
+
+Begin optimization report for: cycle_count()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (cycle_count()) timerstuff.h(6,38)
+
+===========================================================================
+
+    Report from: Profile guided optimizations [pgo]
+
+
+
+Profile feedback used a statically estimated profile for the following routines:
+
+  File: <compiler generated>
+        __sti__$E()
+
+  File: /usr/include/c++/4.4.6/bits/char_traits.h
+        std::char_traits<char>::length(const std::char_traits<char>::char_type *)(263)
+
+  File: bench.cc
+        main()(34)
+
+
+  0 out of 3 routine(s) used training profile data for PGO feedback
+  0 out of 3 routine(s) were unable to use training profile data for PGO feedback
+  0 out of 3 routine(s) were unable to find training profile data for PGO feedback
+  3 out of 3 routine(s) used a static estimate profile for PGO feedback
+
+
+
