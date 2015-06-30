@@ -34,10 +34,9 @@
 
 
 // gpu functions:
-__global__ void AccelerationOnGPU(int n, double box, double * x, double * y, double * z, double * ax, double * ay, double * az,int * neighbors,int * n_neighbors, int maxneighbors);
+__global__ void AccelerationOnGPU(int n_start,int n_end, double box, double * x, double * y, double * z, double * ax, double * ay, double * az,int * neighbors,int * n_neighbors, int maxneighbors);
 
 __global__ void PairCorrelationFunctionOnGPU(int n, int nbins, double box, double binsize, double * x, double * y, double * z, unsigned int * g,int * neighbors,int * n_neighbors, int maxneighbors);
-__global__ void NeighborsOnGPU(int n,double box, double * x,double * y,double * z,int * neighbors, int * n_neighbors,int maxneighbors, double r2cut);
 __global__ void NeighborsOnGPUSharedMemory(int n,double box, double * x,double * y,double * z,int * neighbors, int * n_neighbors,int maxneighbors, double r2cut);
 
 __global__ void UpdateVelocityOnGPU(int n,double* vx,double*vy,double*vz,double* ax,double*ay,double*az,double dt);
@@ -57,9 +56,6 @@ void UpdatePosition(int n,double* x,double*y,double*z,double* vx,double*vy,doubl
 void UpdateVelocity(int n,double* vx,double*vy,double*vz,double* ax,double*ay,double*az,double dt);
 
 void UpdateAcceleration(int n,double box,double* x,double*y,double*z,double* ax,double*ay,double*az,std::vector< int > * neighbors);
-void UpdateAccelerationGPU(int n,double box,double* x,double*y,double*z,double* ax,double*ay,double*az, 
-                          double* gpu_x,double*gpu_y,double*gpu_z,double* gpu_ax,double*gpu_ay,double*gpu_az,
-                          int * gpu_neighbors, int * gpu_n_neighbors,int maxneighbors);
 
 void Check_CUDA_Error(FILE*fp,const char *message){
     cudaError_t error = cudaGetLastError();
@@ -141,6 +137,24 @@ int main (int argc, char* argv[]) {
     double cor_time = 0.0;
     double nbr_time = 0.0;
 
+    int num_gpus = 0;
+    cudaGetDeviceCount(&num_gpus);
+    //num_gpus = 1;
+
+    // which particles does each gpu care about?
+    int n_per_gpu = floor(n / num_gpus) + 1;
+    int * n_start_gpu = (int*)malloc(num_gpus*sizeof(int));
+    int * n_end_gpu   = (int*)malloc(num_gpus*sizeof(int));
+    int count = 0;
+    for (int i = 0; i < num_gpus; i++) {
+        n_start_gpu[i] = count;
+        n_end_gpu[i]   = count + n_per_gpu;
+        count += n_per_gpu;
+    }
+    if ( n_end_gpu[num_gpus - 1] > n ) {
+        n_end_gpu[num_gpus - 1] = n;
+    }
+
     struct cudaDeviceProp cudaProp;
     int gpu_id;
     cudaGetDevice(&gpu_id);
@@ -173,63 +187,69 @@ int main (int argc, char* argv[]) {
     }
 
     // gpu memory:
-    double * gpu_x;
-    double * gpu_y;
-    double * gpu_z;
+    double ** gpu_x = (double**)malloc(num_gpus*sizeof(double*));
+    double ** gpu_y = (double**)malloc(num_gpus*sizeof(double*));
+    double ** gpu_z = (double**)malloc(num_gpus*sizeof(double*));
+             
+    double ** gpu_vx = (double**)malloc(num_gpus*sizeof(double*));
+    double ** gpu_vy = (double**)malloc(num_gpus*sizeof(double*));
+    double ** gpu_vz = (double**)malloc(num_gpus*sizeof(double*));
+             
+    double ** gpu_ax = (double**)malloc(num_gpus*sizeof(double*));
+    double ** gpu_ay = (double**)malloc(num_gpus*sizeof(double*));
+    double ** gpu_az = (double**)malloc(num_gpus*sizeof(double*));
 
-    double * gpu_vx;
-    double * gpu_vy;
-    double * gpu_vz;
+    unsigned int ** gpu_g = (unsigned int**)malloc(num_gpus*sizeof(unsigned int*));
 
-    double * gpu_ax;
-    double * gpu_ay;
-    double * gpu_az;
+    #pragma omp parallel for schedule(dynamic) num_threads (num_gpus)
+    for (int i = 0; i < num_gpus; i++) {
 
-    unsigned int * gpu_g;
+        cudaSetDevice(i);
 
-    cudaMalloc((void**)&gpu_x,n*sizeof(double));
-    cudaMalloc((void**)&gpu_y,n*sizeof(double));
-    cudaMalloc((void**)&gpu_z,n*sizeof(double));
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"malloc xyz");
+        cudaMalloc((void**)&gpu_x[i],n*sizeof(double));
+        cudaMalloc((void**)&gpu_y[i],n*sizeof(double));
+        cudaMalloc((void**)&gpu_z[i],n*sizeof(double));
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"malloc xyz");
 
-    cudaMalloc((void**)&gpu_vx,n*sizeof(double));
-    cudaMalloc((void**)&gpu_vy,n*sizeof(double));
-    cudaMalloc((void**)&gpu_vz,n*sizeof(double));
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"malloc v xyz");
+        cudaMalloc((void**)&gpu_vx[i],n*sizeof(double));
+        cudaMalloc((void**)&gpu_vy[i],n*sizeof(double));
+        cudaMalloc((void**)&gpu_vz[i],n*sizeof(double));
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"malloc v xyz");
 
-    cudaMalloc((void**)&gpu_ax,n*sizeof(double));
-    cudaMalloc((void**)&gpu_ay,n*sizeof(double));
-    cudaMalloc((void**)&gpu_az,n*sizeof(double));
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"malloc a xyz");
+        cudaMalloc((void**)&gpu_ax[i],n*sizeof(double));
+        cudaMalloc((void**)&gpu_ay[i],n*sizeof(double));
+        cudaMalloc((void**)&gpu_az[i],n*sizeof(double));
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"malloc a xyz");
 
-    // pair correlation function
-    cudaMalloc((void**)&gpu_g,nbins*sizeof(unsigned int));
-    cudaMemset((void*)gpu_g,'\0',nbins*sizeof(unsigned int));
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"malloc g");
+        // pair correlation function
+        cudaMalloc((void**)&gpu_g[i],nbins*sizeof(unsigned int));
+        cudaMemset((void*)gpu_g[i],'\0',nbins*sizeof(unsigned int));
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"malloc g");
 
-    // copy positions and velocities to device
-    cudaMemcpy(gpu_x,x,n*sizeof(double),cudaMemcpyHostToDevice);
-    cudaMemcpy(gpu_y,y,n*sizeof(double),cudaMemcpyHostToDevice);
-    cudaMemcpy(gpu_z,z,n*sizeof(double),cudaMemcpyHostToDevice);
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"copy xyz");
+        // copy positions and velocities to device
+        cudaMemcpy(gpu_x[i],x,n*sizeof(double),cudaMemcpyHostToDevice);
+        cudaMemcpy(gpu_y[i],y,n*sizeof(double),cudaMemcpyHostToDevice);
+        cudaMemcpy(gpu_z[i],z,n*sizeof(double),cudaMemcpyHostToDevice);
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"copy xyz");
 
-    cudaMemcpy(gpu_vx,vx,n*sizeof(double),cudaMemcpyHostToDevice);
-    cudaMemcpy(gpu_vy,vy,n*sizeof(double),cudaMemcpyHostToDevice);
-    cudaMemcpy(gpu_vz,vz,n*sizeof(double),cudaMemcpyHostToDevice);
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"copy v xyz");
+        cudaMemcpy(gpu_vx[i],vx,n*sizeof(double),cudaMemcpyHostToDevice);
+        cudaMemcpy(gpu_vy[i],vy,n*sizeof(double),cudaMemcpyHostToDevice);
+        cudaMemcpy(gpu_vz[i],vz,n*sizeof(double),cudaMemcpyHostToDevice);
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"copy v xyz");
 
-    // zero acceleration on gpu
-    cudaMemset((void*)gpu_ax,'\0',n*sizeof(double));
-    cudaMemset((void*)gpu_ay,'\0',n*sizeof(double));
-    cudaMemset((void*)gpu_az,'\0',n*sizeof(double));
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"memset a xyz");
+        // zero acceleration on gpu
+        cudaMemset((void*)gpu_ax[i],'\0',n*sizeof(double));
+        cudaMemset((void*)gpu_ay[i],'\0',n*sizeof(double));
+        cudaMemset((void*)gpu_az[i],'\0',n*sizeof(double));
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"memset a xyz");
+    }
 
     // threads per block should be multiple of the warp
     // size (32) and has max value cudaProp.maxThreadsPerBlock
@@ -253,19 +273,25 @@ int main (int argc, char* argv[]) {
 
 
     // neighbor list ... slightly more complicated than for the CPU
-    int * gpu_n_neighbors;
-    cudaMalloc((void**)&gpu_n_neighbors,n*sizeof(int));
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"malloc n_neighbors");
+    int ** gpu_n_neighbors = (int**)malloc(num_gpus*sizeof(int*));
+    #pragma omp parallel for schedule(dynamic) num_threads (num_gpus)
+    for (int i = 0; i < num_gpus; i++) {
+        cudaSetDevice(i);
+        cudaMalloc((void**)&gpu_n_neighbors[i],n*sizeof(int));
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"malloc n_neighbors");
 
-    // figure out reasonable estimate of the max number of
-    // neighbors
-    InitialNeighborCount<<<dimgrid,threads_per_block>>>(n,box,gpu_x,gpu_y,gpu_z,gpu_n_neighbors,r2cut);
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"get n_neighbors");
+        // figure out reasonable estimate of the max number of
+        // neighbors
+        InitialNeighborCount<<<dimgrid,threads_per_block>>>(n,box,gpu_x[i],gpu_y[i],gpu_z[i],gpu_n_neighbors[i],r2cut);
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"get n_neighbors");
+    }
+
+    cudaSetDevice(0);
 
     int * n_neighbors = (int*)malloc(n*sizeof(int));
-    cudaMemcpy(n_neighbors,gpu_n_neighbors,n*sizeof(int),cudaMemcpyDeviceToHost);
+    cudaMemcpy(n_neighbors,gpu_n_neighbors[0],n*sizeof(int),cudaMemcpyDeviceToHost);
     cudaThreadSynchronize();
     Check_CUDA_Error(stdout,"copy n_neighbors");
 
@@ -285,15 +311,21 @@ int main (int argc, char* argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    int * gpu_neighbors;
-    cudaMalloc((void**)&gpu_neighbors,n*maxneighbors*sizeof(int));
-    cudaMemset((void*)gpu_neighbors,'\0',n*maxneighbors*sizeof(unsigned int));
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"malloc neighbors");
+    int ** gpu_neighbors = (int**)malloc(num_gpus*sizeof(int*));
+    #pragma omp parallel for schedule(dynamic) num_threads (num_gpus)
+    for (int i = 0; i < num_gpus; i++) {
 
-    NeighborsOnGPUSharedMemory<<<dimgrid,threads_per_block>>>(n,box,gpu_x,gpu_y,gpu_z,gpu_neighbors,gpu_n_neighbors,maxneighbors,r2cut);
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"neighbor list");
+        cudaSetDevice(i);
+
+        cudaMalloc((void**)&gpu_neighbors[i],n*maxneighbors*sizeof(int));
+        cudaMemset((void*)gpu_neighbors[i],'\0',n*maxneighbors*sizeof(unsigned int));
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"malloc neighbors");
+
+        NeighborsOnGPUSharedMemory<<<dimgrid,threads_per_block>>>(n,box,gpu_x[i],gpu_y[i],gpu_z[i],gpu_neighbors[i],gpu_n_neighbors[i],maxneighbors,r2cut);
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"neighbor list");
+   }
 
     double set_time = omp_get_wtime() - start_total;
 
@@ -302,41 +334,73 @@ int main (int argc, char* argv[]) {
     double  t = 0.0;
     int npts = 0;
     int iter = 0;
+
     do { 
 
         double start = omp_get_wtime();
-        UpdatePositionOnGPU<<<dimgrid,threads_per_block>>>(n,gpu_x,gpu_y,gpu_z,gpu_vx,gpu_vy,gpu_vz,gpu_ax,gpu_ay,gpu_az,dt,box);
-        cudaThreadSynchronize();
-        Check_CUDA_Error(stdout,"update position");
+        #pragma omp parallel for schedule(dynamic) num_threads (num_gpus)
+        for (int i = 0; i < num_gpus; i++) {
+            cudaSetDevice(i);
+            UpdatePositionOnGPU<<<dimgrid,threads_per_block>>>(n,gpu_x[i],gpu_y[i],gpu_z[i],gpu_vx[i],gpu_vy[i],gpu_vz[i],gpu_ax[i],gpu_ay[i],gpu_az[i],dt,box);
+            cudaThreadSynchronize();
+            Check_CUDA_Error(stdout,"update position");
+        }
         double end = omp_get_wtime();
         pos_time += end - start;
 
         start = omp_get_wtime();
-        UpdateVelocityOnGPU<<<dimgrid,threads_per_block>>>(n,gpu_vx,gpu_vy,gpu_vz,gpu_ax,gpu_ay,gpu_az,dt);
-        cudaThreadSynchronize();
-        Check_CUDA_Error(stdout,"update velocity");
+        #pragma omp parallel for schedule(dynamic) num_threads (num_gpus)
+        for (int i = 0; i < num_gpus; i++) {
+            cudaSetDevice(i);
+            UpdateVelocityOnGPU<<<dimgrid,threads_per_block>>>(n,gpu_vx[i],gpu_vy[i],gpu_vz[i],gpu_ax[i],gpu_ay[i],gpu_az[i],dt);
+            cudaThreadSynchronize();
+            Check_CUDA_Error(stdout,"update velocity");
+        }
         end = omp_get_wtime();
         vel_time += end - start;
 
         start = omp_get_wtime();
-        AccelerationOnGPU<<<dimgrid,threads_per_block>>>(n,box,gpu_x,gpu_y,gpu_z,gpu_ax,gpu_ay,gpu_az,gpu_neighbors,gpu_n_neighbors,maxneighbors);
-        cudaThreadSynchronize();
-        Check_CUDA_Error(stdout,"update acceleration");
+        #pragma omp parallel for schedule(dynamic) num_threads (num_gpus)
+        for (int i = 0; i < num_gpus; i++) {
+            cudaSetDevice(i);
+            AccelerationOnGPU<<<dimgrid,threads_per_block>>>(n_start_gpu[i],n_end_gpu[i],box,gpu_x[i],gpu_y[i],gpu_z[i],gpu_ax[i],gpu_ay[i],gpu_az[i],gpu_neighbors[i],gpu_n_neighbors[i],maxneighbors);
+            cudaThreadSynchronize();
+            Check_CUDA_Error(stdout,"update acceleration");
+        }
         end = omp_get_wtime();
         acc_time += end - start;
 
+        // copy new acceleration to other gpu
+        #pragma omp parallel for schedule(dynamic) num_threads (num_gpus)
+        for (int i = 0; i < num_gpus; i++) {
+            for (int j = 0; j < num_gpus; j++) {
+                if ( i == j ) continue;
+                cudaMemcpyPeer(gpu_ax[j]+n_start_gpu[i],j,gpu_ax[i]+n_start_gpu[i],i,(n_end_gpu[i]-n_start_gpu[i])*sizeof(double));
+                cudaMemcpyPeer(gpu_ay[j]+n_start_gpu[i],j,gpu_ay[i]+n_start_gpu[i],i,(n_end_gpu[i]-n_start_gpu[i])*sizeof(double));
+                cudaMemcpyPeer(gpu_az[j]+n_start_gpu[i],j,gpu_az[i]+n_start_gpu[i],i,(n_end_gpu[i]-n_start_gpu[i])*sizeof(double));
+            }
+        }
+
         start = omp_get_wtime();
-        UpdateVelocityOnGPU<<<dimgrid,threads_per_block>>>(n,gpu_vx,gpu_vy,gpu_vz,gpu_ax,gpu_ay,gpu_az,dt);
-        cudaThreadSynchronize();
-        Check_CUDA_Error(stdout,"update velocity");
+        #pragma omp parallel for schedule(dynamic) num_threads (num_gpus)
+        for (int i = 0; i < num_gpus; i++) {
+            cudaSetDevice(i);
+            UpdateVelocityOnGPU<<<dimgrid,threads_per_block>>>(n,gpu_vx[i],gpu_vy[i],gpu_vz[i],gpu_ax[i],gpu_ay[i],gpu_az[i],dt);
+            cudaThreadSynchronize();
+            Check_CUDA_Error(stdout,"update velocity");
+        }
         end = omp_get_wtime();
         vel_time += end - start;
       
         if ( iter > 199 && iter % 100 == 0 ) { 
             start = omp_get_wtime();
-            PairCorrelationFunctionOnGPU<<<dimgrid,threads_per_block>>>(n,nbins,box,binsize,gpu_x,gpu_y,gpu_z,gpu_g,gpu_neighbors,gpu_n_neighbors,maxneighbors);
-            cudaThreadSynchronize();
-            Check_CUDA_Error(stdout,"update pair correlation function");
+            #pragma omp parallel for schedule(dynamic) num_threads (num_gpus)
+            for (int i = 0; i < num_gpus; i++) {
+                cudaSetDevice(i);
+                PairCorrelationFunctionOnGPU<<<dimgrid,threads_per_block>>>(n,nbins,box,binsize,gpu_x[i],gpu_y[i],gpu_z[i],gpu_g[i],gpu_neighbors[i],gpu_n_neighbors[i],maxneighbors);
+                cudaThreadSynchronize();
+                Check_CUDA_Error(stdout,"update pair correlation function");
+            }
             npts++;
             end = omp_get_wtime();
             cor_time += end - start;
@@ -344,11 +408,16 @@ int main (int argc, char* argv[]) {
         // update neighbor list
         if ( (iter+1) % 20 == 0 ) {
             start = omp_get_wtime();
-            NeighborsOnGPUSharedMemory<<<dimgrid,threads_per_block>>>(n,box,gpu_x,gpu_y,gpu_z,gpu_neighbors,gpu_n_neighbors,maxneighbors,r2cut);
-            cudaThreadSynchronize();
-            Check_CUDA_Error(stdout,"update neighbor list");
+            #pragma omp parallel for schedule(dynamic) num_threads (num_gpus)
+            for (int i = 0; i < num_gpus; i++) {
+                cudaSetDevice(i);
+                NeighborsOnGPUSharedMemory<<<dimgrid,threads_per_block>>>(n,box,gpu_x[i],gpu_y[i],gpu_z[i],gpu_neighbors[i],gpu_n_neighbors[i],maxneighbors,r2cut);
+                cudaThreadSynchronize();
+                Check_CUDA_Error(stdout,"update neighbor list");
+            }
 
-            cudaMemcpy(n_neighbors,gpu_n_neighbors,n*sizeof(int),cudaMemcpyDeviceToHost);
+            cudaSetDevice(0);
+            cudaMemcpy(n_neighbors,gpu_n_neighbors[0],n*sizeof(int),cudaMemcpyDeviceToHost);
             cudaThreadSynchronize();
             Check_CUDA_Error(stdout,"copy n_neighbors");
 
@@ -379,7 +448,10 @@ int main (int argc, char* argv[]) {
     printf("\n");
     printf("    #                  r");
     printf("                 g(r)\n");
-    cudaMemcpy(g,gpu_g,nbins*sizeof(unsigned int),cudaMemcpyDeviceToHost);
+
+    cudaSetDevice(0);
+
+    cudaMemcpy(g,gpu_g[0],nbins*sizeof(unsigned int),cudaMemcpyDeviceToHost);
     cudaThreadSynchronize();
     Check_CUDA_Error(stdout,"copy pair correlation function");
     for (int i = 1; i < nbins; i++) {
@@ -411,32 +483,36 @@ int main (int argc, char* argv[]) {
     printf("    # total wall time for simulation:     %10.2lf s\n",end_total-start_total);
     printf("\n");
 
-    cudaFree(gpu_x);
-    cudaFree(gpu_y);
-    cudaFree(gpu_z);
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"free xyz");
+    for (int i = 0; i < num_gpus; i++) {
+        cudaSetDevice(i);
 
-    cudaFree(gpu_vx);
-    cudaFree(gpu_vy);
-    cudaFree(gpu_vz);
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"free v xyz");
+        cudaFree(gpu_x[i]);
+        cudaFree(gpu_y[i]);
+        cudaFree(gpu_z[i]);
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"free xyz");
 
-    cudaFree(gpu_ax);
-    cudaFree(gpu_ay);
-    cudaFree(gpu_az);
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"free a xyz");
+        cudaFree(gpu_vx[i]);
+        cudaFree(gpu_vy[i]);
+        cudaFree(gpu_vz[i]);
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"free v xyz");
 
-    cudaFree(gpu_g);
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"free g");
+        cudaFree(gpu_ax[i]);
+        cudaFree(gpu_ay[i]);
+        cudaFree(gpu_az[i]);
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"free a xyz");
 
-    cudaFree(gpu_neighbors);
-    cudaFree(gpu_n_neighbors);
-    cudaThreadSynchronize();
-    Check_CUDA_Error(stdout,"free neighbors");
+        cudaFree(gpu_g[i]);
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"free g");
+
+        cudaFree(gpu_neighbors[i]);
+        cudaFree(gpu_n_neighbors[i]);
+        cudaThreadSynchronize();
+        Check_CUDA_Error(stdout,"free neighbors");
+    }
 
     cudaDeviceReset();
 
@@ -621,44 +697,6 @@ void UpdateVelocity(int n,double* vx,double*vy,double*vz,double* ax,double*ay,do
     }
 
 }
-
-void UpdateAccelerationGPU(int n,double box,double* x,double*y,double*z,double* ax,double*ay,double*az, 
-                          double* gpu_x,double*gpu_y,double*gpu_z,double* gpu_ax,double*gpu_ay,double*gpu_az,
-                          int * gpu_neighbors, int * gpu_n_neighbors,int maxneighbors) {
-
-    //cudaMemcpy(gpu_x,x,n*sizeof(double),cudaMemcpyHostToDevice);
-    //cudaMemcpy(gpu_y,y,n*sizeof(double),cudaMemcpyHostToDevice);
-    //cudaMemcpy(gpu_z,z,n*sizeof(double),cudaMemcpyHostToDevice);
-
-    // threads per block should be multiple of the warp
-    // size (32) and has max value cudaProp.maxThreadsPerBlock
-    int threads_per_block = NUM_THREADS;
-    int maxblocks         = MAX_BLOCKS;
-
-    long int nblocks_x = n / threads_per_block;
-    long int nblocks_y = 1;
-
-    if ( n % threads_per_block != 0 ) {
-       nblocks_x = (n + threads_per_block - n % threads_per_block ) / threads_per_block;
-    }
-
-    if (nblocks_x > maxblocks){
-       nblocks_y = nblocks_x / maxblocks + 1;
-       nblocks_x = nblocks_x / nblocks_y + 1;
-    }
-
-    // a two-dimensional grid: nblocks_x by nblocks_y
-    dim3 dimgrid (nblocks_x,nblocks_y);
-
-    // evaluate acceleration on GPU
-    AccelerationOnGPU<<<dimgrid,threads_per_block>>>(n,box,gpu_x,gpu_y,gpu_z,gpu_ax,gpu_ay,gpu_az,gpu_neighbors,gpu_n_neighbors,maxneighbors);
-    cudaThreadSynchronize();
-    
-    //cudaMemcpy(ax,gpu_ax,n*sizeof(double),cudaMemcpyDeviceToHost);
-    //cudaMemcpy(ay,gpu_ay,n*sizeof(double),cudaMemcpyDeviceToHost);
-    //cudaMemcpy(az,gpu_az,n*sizeof(double),cudaMemcpyDeviceToHost);
-}
-
 
 void UpdateAcceleration(int n,double box,double* x,double*y,double*z,double* ax,double*ay,double*az,std::vector < int > * neighbors) {
 
@@ -892,60 +930,14 @@ __global__ void NeighborsOnGPUSharedMemory(int n,double box, double * x,double *
 
 }
 
-__global__ void NeighborsOnGPU(int n,double box, double * x,double * y,double * z,int * neighbors, int * n_neighbors,int maxneighbors, double r2cut) {
-
-    int blockid = blockIdx.x*gridDim.y + blockIdx.y;
-    int i       = blockid*blockDim.x + threadIdx.x;
-
-    if ( i >= n ) return;
-
-    double halfbox = 0.5 * box;
-
-    // clear neighbor list
-    n_neighbors[i] = 0;
-
-    double xi = x[i];
-    double yi = y[i];
-    double zi = z[i];
-
-    for (int j = 0; j < n; j++) {
-        if ( i == j ) continue;
-        double dx  = xi - x[j];
-        double dy  = yi - y[j];
-        double dz  = zi - z[j];
-
-        // minimum image convention:
-        if ( dx > halfbox ) {
-            dx -= box;
-        }else if ( dx < -halfbox ) {
-            dx += box;
-        }
-        if ( dy > halfbox ) {
-            dy -= box;
-        }else if ( dy < -halfbox ) {
-            dy += box;
-        }
-        if ( dz > halfbox ) {
-            dz -= box;
-        }else if ( dz < -halfbox ) {
-            dz += box;
-        }
-
-        double r2  = dx*dx + dy*dy + dz*dz;
-        if ( r2 < r2cut ) {
-           neighbors[i*maxneighbors+n_neighbors[i]] = j;
-           n_neighbors[i]++;
-        }
-    }
-}
-
 // evaluate acceleration on GPU, using neighbor lists
-__global__ void AccelerationOnGPU(int n, double box, double * x, double * y, double * z, double * ax, double * ay, double * az,int * neighbors,int * n_neighbors, int maxneighbors) {
+__global__ void AccelerationOnGPU(int n_start,int n_end, double box, double * x, double * y, double * z, double * ax, double * ay, double * az,int * neighbors,int * n_neighbors, int maxneighbors) {
 
     int blockid = blockIdx.x*gridDim.y + blockIdx.y;
     int i       = blockid*blockDim.x + threadIdx.x;
 
-    if ( i >= n ) return;
+    if ( i >= n_end ) return;
+    if ( i < n_start ) return;
 
     double halfbox = 0.5 * box;
 
@@ -994,7 +986,7 @@ __global__ void AccelerationOnGPU(int n, double box, double * x, double * y, dou
 
     }
 
-    if ( i < n ) {
+    if ( i < n_end && i >= n_start ) {
         ax[i] = 24.0 * axi;
         ay[i] = 24.0 * ayi;
         az[i] = 24.0 * azi;
