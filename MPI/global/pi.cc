@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 
   srandom(rank*11+13);
 
-  const long N = 100000000;
+  const long N = 10000000000;
   long sum = 0;
   for (long i=rank; i<N; i+=size) {
     double x = 2.0*(drand()-0.5); // Random value in [-1,1]
@@ -26,20 +26,12 @@ int main(int argc, char** argv) {
     if (rsq < 1.0) sum++;
   }
 
-  if (rank == 0) {
-    for (int i=1; i<size; i++) {
-      long sum2;
-      MPI_Recv(&sum2, 1, MPI_LONG, i, 1, MPI_COMM_WORLD, &status);
-      sum+=sum2;
-      
-    }
-     double pi = (4.0*sum)/N;
-     std::cout.precision(8);
-     std::cout << pi <<std::endl;
-  }
-  else {
-    MPI_Send(&sum, 1, MPI_LONG, 0, 1, MPI_COMM_WORLD);
-  }
+  long total;
+  MPI_Reduce(&sum, &total, 1, MPI_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+
+  double pi = (4.0*total)/N;
+  std::cout.precision(8);
+  std::cout << pi <<std::endl;
 
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize();
