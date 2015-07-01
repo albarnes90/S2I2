@@ -36,12 +36,12 @@ int main(int argc, char** argv) {
 
     if (rank == 0) printf("trying 3\n");
     MPI_Request req;
-    MPI_Irecv(buf2, maxlen, MPI::BYTE, other, 3, MPI_COMM_WORLD, &req);
+    MPI_Irecv(buf2, maxlen, MPI::BYTE, other, 3, MPI_COMM_WORLD, &req); //posting asynchronous receive request
     MPI_Send(buf1, maxlen, MPI::BYTE, other, 3, MPI_COMM_WORLD);
     MPI_Wait(&req, MPI_STATUS_IGNORE);
 
     if (rank == 0) printf("trying 3a\n");
-    MPI_Isend(buf1, maxlen, MPI::BYTE, other, 3, MPI_COMM_WORLD, &req);
+    MPI_Isend(buf1, maxlen, MPI::BYTE, other, 3, MPI_COMM_WORLD, &req); //posting asynchronous send request
     MPI_Recv(buf2, maxlen, MPI::BYTE, other, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Wait(&req, MPI_STATUS_IGNORE);
 
