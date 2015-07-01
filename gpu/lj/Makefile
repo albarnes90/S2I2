@@ -1,19 +1,19 @@
-INCLUDE   = 
-LIB       = -lcublas -L/usr/local/cuda/lib64/  -liomp5 -L/edfs/users/edgroup/software/intel/lib/intel64
+INCLUDE   =
+LIB       =
 CFLAGS    = -O2 -openmp
-NVCCFLAGS = -O2 -arch sm_20 -Xcompiler -fopenmp 
+NVCCFLAGS = -O2 -arch sm_20 -Xcompiler -fopenmp
 EXEC      = ljforces.x
 CXX       = icpc
 NVCC      = nvcc
 
-$(EXEC): main.cu 
-	$(NVCC) $(NVCCFLAGS) $(LIB) $(INCLUDE) main.cu -o $(EXEC) 
+default :: ljforces.x ljforces_cpu.x
 
-#daxpy.o: daxpy.cc
-#	$(CXX) $(INCLUDE) $(CFLAGS) daxpy.cc -c 
+ljforces.x: main.cu
+	$(NVCC) $(NVCCFLAGS) $(LIB) $(INCLUDE) main.cu -o ljforces.x
 
-#daxpy_gpu.o: daxpy_gpu.cu
-#	$(NVCC) $(INCLUDE) $(NVCCFLAGS) daxpy_gpu.cu -c 
+ljforces_cpu.x: cpu_only.cc
+	$(NVCC) $(NVCCFLAGS) $(LIB) $(INCLUDE) cpu_only.cc -o ljforces_cpu.x
+	#$(CXX) $(CFLAGS) $(LIB) $(INCLUDE) cpu_only.cc -o ljforces_cpu.x
 
 clean:
 	rm -f *.o *.x

@@ -55,7 +55,7 @@ int main ( int argc, char * argv[] ) {
 
     if ( argc != 2 ) {
         printf("\n");
-        printf("    usage: ./test.x dimension\n");
+        printf("    usage: ./vecadd.x dimension\n");
         printf("\n");
         exit(EXIT_FAILURE);
     }
@@ -68,8 +68,7 @@ int main ( int argc, char * argv[] ) {
     double * c = (double*)malloc(n*sizeof(double));
 
     // initialize x and y buffers
-    srand(time(NULL));
-    #pragma omp parallel for schedule(static)
+    srand(0);
     for (int i = 0; i < n; i++) {
         a[i] = 2.0 * ( (double)rand()/RAND_MAX - 1.0);
         b[i] = 2.0 * ( (double)rand()/RAND_MAX - 1.0);
@@ -133,6 +132,15 @@ int main ( int argc, char * argv[] ) {
     printf("        _________________________________________________________\n");
     printf("\n");
 
+    // check for errors
+    cudaError_t error = cudaGetLastError();
+    if (error!=cudaSuccess) {
+       printf("\n");
+       printf("    error: %s\n\n", cudaGetErrorString(error) );
+       printf("\n");
+       exit(EXIT_FAILURE);
+    }
+
     // number of blocks and threads for vecadd_gpu_by_blocks_and_threads
     int dim = (int)sqrt(n) + 1;
 
@@ -165,6 +173,15 @@ int main ( int argc, char * argv[] ) {
         vecadd_gpu_2d_grid<<<dimgrid,threads_per_block>>>(n,aGPU,bGPU,cGPU);
     }
     cudaThreadSynchronize();
+
+    // check for errors
+    error = cudaGetLastError();
+    if (error!=cudaSuccess) {
+       printf("\n");
+       printf("    error: %s\n\n", cudaGetErrorString(error) );
+       printf("\n");
+       exit(EXIT_FAILURE);
+    }
 
     end = omp_get_wtime();
     double gputime = end-start;
